@@ -1,0 +1,134 @@
+:root {
+  --bg-page: #120d0b;
+  --bg-card: #1c1512;
+  --bg-card-deep: #2a1216;
+
+  --text-main: #f3ede6;
+  --text-muted: #a79c90;
+
+  --clay: #c4243f;
+  --clay-soft: #e14b63;
+
+  --sand-line: rgba(243, 237, 230, 0.14);
+  --chip-bg: rgba(243, 237, 230, 0.08);
+
+  --hero-circle-start: #c4243f;
+  --hero-circle-end: #25060c;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg-page: #f3ede6;
+    --bg-card: #ffffff;
+    --bg-card-deep: #ede0d5;
+
+    --text-main: #15110c;
+    --text-muted: #6b6459;
+
+    --clay: #c4243f;
+    --clay-soft: #a31d34;
+
+    --sand-line: rgba(21, 17, 12, 0.12);
+    --chip-bg: rgba(21, 17, 12, 0.06);
+
+    --hero-circle-start: #c4243f;
+    --hero-circle-end: #c4243f;
+  }
+}
+
+:root[data-theme="light"] {
+  --bg-page: #f3ede6;
+  --bg-card: #ffffff;
+  --bg-card-deep: #ede0d5;
+
+  --text-main: #15110c;
+  --text-muted: #6b6459;
+
+  --clay: #c4243f;
+  --clay-soft: #a31d34;
+
+  --sand-line: rgba(21, 17, 12, 0.12);
+  --chip-bg: rgba(21, 17, 12, 0.06);
+
+  --hero-circle-start: #c4243f;
+  --hero-circle-end: #c4243f;
+}
+
+:root[data-theme="dark"] {
+  --bg-page: #120d0b;
+  --bg-card: #1c1512;
+  --bg-card-deep: #2a1216;
+
+  --text-main: #f3ede6;
+  --text-muted: #a79c90;
+
+  --clay: #c4243f;
+  --clay-soft: #e14b63;
+
+  --sand-line: rgba(243, 237, 230, 0.14);
+  --chip-bg: rgba(243, 237, 230, 0.08);
+
+  --hero-circle-start: #c4243f;
+  --hero-circle-end: #25060c;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  max-width: 1440px;
+  margin: 0 auto;
+
+  background-color: var(--bg-page);
+  color: var(--text-main);
+}
+
+.font-onest {
+  font-family: "Onest", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+.font-playfair {
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+nav ul {
+  list-style: none;
+}
+
+nav ul li a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.icon {
+  filter: none;
+}
+
+:root[data-theme="light"] .icon {
+  filter: brightness(0);
+}
+
+:root[data-theme="dark"] .icon {
+  filter: none;
+}
