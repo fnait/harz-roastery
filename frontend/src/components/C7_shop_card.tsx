@@ -1,7 +1,7 @@
 import { css, cx } from "@emotion/css";
 
 import type { CartProduct } from "../data/products";
-import { translations } from "./translations";
+// import { translations } from "./translations";
 
 // ----------------------------------------------------------------------
 // TYPES
@@ -239,7 +239,7 @@ const add_button = css({
 // ----------------------------------------------------------------------
 
 function C7_shop_card({ product, onAddToCart, language }: Props) {
-  const t = translations[language];
+  // const t = translations[language];
 
   return (
     <article className={c7_card}>
@@ -267,7 +267,13 @@ function C7_shop_card({ product, onAddToCart, language }: Props) {
           <div className={product_meta}>
             <p className={product_weight}>{product.weight}</p>
             <p className={cx(stock, product.inStock ? in_stock : out_of_stock)}>
-              {product.inStock ? "In stock" : "Out of stock"}
+              {product.inStock && product.stock > 0
+                ? language === "uk"
+                  ? "В наявності"
+                  : "In stock"
+                : language === "uk"
+                  ? "Немає в наявності"
+                  : "Out of stock"}
             </p>
           </div>
         </div>
@@ -279,7 +285,13 @@ function C7_shop_card({ product, onAddToCart, language }: Props) {
             onClick={onAddToCart}
             disabled={!product.inStock}
           >
-            {product.inStock ? t.c7.add_to_cart : "Out of stock"}
+            {product.inStock && product.stock > 0
+              ? language === "uk"
+                ? "Додати в кошик"
+                : "Add to cart"
+              : language === "uk"
+                ? "Немає в наявності"
+                : "Out of stock"}
           </button>
         </div>
       </div>

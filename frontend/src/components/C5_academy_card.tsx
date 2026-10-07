@@ -394,6 +394,76 @@ const cp_top_p5 = css({
   },
 });
 
+const success_content = css({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+
+  padding: "28px 10px 8px",
+
+  textAlign: "center",
+});
+
+const success_icon = css({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+
+  width: "64px",
+  height: "64px",
+
+  marginBottom: "22px",
+
+  backgroundColor: "var(--clay)",
+  borderRadius: "50%",
+
+  color: "#f3ede6",
+  fontSize: "30px",
+  fontWeight: "700",
+});
+
+const success_title = css({
+  margin: "0 0 10px",
+
+  color: "var(--text-main)",
+
+  fontSize: "26px",
+  fontWeight: "800",
+});
+
+const success_text = css({
+  maxWidth: "420px",
+
+  margin: "0 0 28px",
+
+  color: "var(--text-muted)",
+
+  fontSize: "14px",
+  lineHeight: "160%",
+});
+
+const success_button = css({
+  minWidth: "150px",
+
+  padding: "13px 24px",
+
+  backgroundColor: "var(--clay)",
+  border: "none",
+  borderRadius: "100px",
+
+  color: "#f3ede6",
+
+  font: "inherit",
+  fontSize: "14px",
+  fontWeight: "700",
+
+  cursor: "pointer",
+
+  "&:hover": {
+    opacity: 0.9,
+  },
+});
+
 // ----------------------------------------------------------------------
 // COMPONENT
 // ----------------------------------------------------------------------
@@ -410,6 +480,7 @@ function C5_academy_card({
   const t = translations[language];
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   // Lock page scrolling while the modal is open.
   useEffect(() => {
@@ -447,7 +518,7 @@ function C5_academy_card({
         customer: { name, email, phone },
       });
 
-      onClose();
+      setIsSuccess(true);
     } catch (error) {
       console.error("Course enrollment failed:", error);
 
@@ -462,6 +533,37 @@ function C5_academy_card({
       setIsSubmitting(false);
     }
   };
+
+  if (isSuccess) {
+    return (
+      <div className={overlay} onClick={onClose}>
+        <div
+          className={cx(card_place, "font-onest")}
+          onClick={(event) => event.stopPropagation()}
+        >
+          <div className={success_content}>
+            <div className={success_icon}>✓</div>
+
+            <h2 className={success_title}>
+              {language === "uk"
+                ? "Дякуємо за реєстрацію!"
+                : "Thank you for registering!"}
+            </h2>
+
+            <p className={success_text}>
+              {language === "uk"
+                ? "Ми отримали вашу заявку на курс. Ми зв’яжемося з вами найближчим часом, щоб підтвердити участь та уточнити деталі."
+                : "We have received your course registration. We will contact you shortly to confirm your participation and provide further details."}
+            </p>
+
+            <button type="button" className={success_button} onClick={onClose}>
+              {language === "uk" ? "Готово" : "Done"}
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={overlay} onClick={onClose}>

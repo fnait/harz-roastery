@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { css } from "@emotion/css";
+import close_icon from "../../assets/close_icon.svg";
 
 import ImageEditorModal from "../utils/ImageEditorModal";
 import AProd_CustomSelect, { type SelectOption } from "./AProd_CustomSelect";
@@ -32,14 +33,16 @@ type ProductForm = {
   roastColor: string;
   weight: string;
   price: string;
+  stock: string;
+
   descriptionUk: string;
   descriptionEn: string;
+
   category: CartProduct["category"];
   inStock: boolean;
+
   image: string;
-  // Firebase Storage — primary
   imageStoragePath?: string;
-  // Cloudinary — fallback
   imagePublicId?: string;
 };
 
@@ -61,6 +64,7 @@ const createInitialForm = (product: CartProduct | null): ProductForm => {
       roastColor: product.roastColor,
       weight: product.weight,
       price: String(product.price),
+      stock: String(product.stock ?? 0),
       descriptionUk: product.description.uk,
       descriptionEn: product.description.en,
       category: product.category,
@@ -77,6 +81,7 @@ const createInitialForm = (product: CartProduct | null): ProductForm => {
     roastColor: "#D9A96E",
     weight: "250g",
     price: "",
+    stock: "10",
     descriptionUk: "",
     descriptionEn: "",
     category: "single-origin",
@@ -112,50 +117,163 @@ const overlay = css({
 });
 
 const modal = css({
-  overflowY: "auto",
+  display: "flex",
+  flexDirection: "column",
 
   width: "100%",
-  maxWidth: "520px",
+  maxWidth: "720px",
   maxHeight: "calc(100vh - 40px)",
   boxSizing: "border-box",
 
-  padding: "28px",
+  overflow: "hidden",
 
   backgroundColor: "var(--bg-card)",
   border: "1px solid var(--sand-line)",
   borderRadius: "24px",
 
+  color: "var(--text-main)",
+
+  boxShadow: "0 24px 80px rgba(0, 0, 0, 0.35)",
+
+  "@media (max-width: 700px)": {
+    maxHeight: "calc(100vh - 24px)",
+    borderRadius: "18px",
+  },
+});
+
+const modal_header = css({
+  display: "flex",
+  alignItems: "flex-start",
+  justifyContent: "space-between",
+
+  padding: "26px 28px 22px",
+  gap: "20px",
+
+  borderBottom: "1px solid var(--sand-line)",
+
   "& h2": {
-    margin: "0 0 24px",
-    fontSize: "24px",
+    margin: 0,
+
+    fontSize: "26px",
+    fontWeight: "800",
+    lineHeight: "125%",
+  },
+
+  "& p": {
+    margin: "7px 0 0",
+
+    color: "var(--text-muted)",
+
+    fontSize: "13px",
+    lineHeight: "150%",
   },
 
   "@media (max-width: 600px)": {
-    maxHeight: "calc(100vh - 24px)",
-    padding: "20px",
-    borderRadius: "18px",
+    padding: "22px 20px 18px",
 
     "& h2": {
-      marginBottom: "20px",
-      fontSize: "21px",
+      fontSize: "22px",
     },
+  },
+});
+
+const close_button = css({
+  flexShrink: 0,
+
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+
+  width: "34px",
+  height: "34px",
+
+  padding: 0,
+
+  backgroundColor: "var(--chip-bg)",
+  border: "none",
+  borderRadius: "50%",
+
+  cursor: "pointer",
+
+  "& img": {
+    width: "15px",
+    height: "15px",
+  },
+
+  "&:hover": {
+    opacity: 0.8,
+  },
+});
+
+const modal_body = css({
+  overflowY: "auto",
+
+  padding: "24px 28px 28px",
+
+  "@media (max-width: 600px)": {
+    padding: "20px",
+  },
+});
+
+const form_section = css({
+  display: "flex",
+  flexDirection: "column",
+
+  gap: "16px",
+
+  padding: "20px",
+
+  backgroundColor: "var(--chip-bg)",
+  border: "1px solid var(--sand-line)",
+  borderRadius: "18px",
+});
+
+const section_title = css({
+  margin: 0,
+
+  color: "var(--text-main)",
+
+  fontSize: "14px",
+  fontWeight: "800",
+});
+
+const fields_grid = css({
+  display: "grid",
+  gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+
+  gap: "16px",
+
+  "@media (max-width: 620px)": {
+    gridTemplateColumns: "1fr",
+  },
+});
+
+const full_width = css({
+  gridColumn: "1 / -1",
+
+  "@media (max-width: 620px)": {
+    gridColumn: "auto",
   },
 });
 
 const form = css({
   display: "flex",
   flexDirection: "column",
-  gap: "16px",
+
+  gap: "20px",
 });
 
 const field = css({
   display: "flex",
   flexDirection: "column",
-  gap: "8px",
+
+  gap: "7px",
 
   "& > label": {
-    fontSize: "13px",
-    fontWeight: "600",
+    color: "var(--text-muted)",
+
+    fontSize: "12px",
+    fontWeight: "700",
   },
 
   "& > input, & > textarea": {
@@ -164,14 +282,22 @@ const field = css({
 
     padding: "12px 14px",
 
-    backgroundColor: "var(--chip-bg)",
+    backgroundColor: "var(--bg-card)",
     border: "1px solid var(--sand-line)",
     borderRadius: "12px",
 
     color: "var(--text-main)",
+
     font: "inherit",
+    fontSize: "14px",
 
     outline: "none",
+
+    transition: "border-color 0.15s ease",
+
+    "&:hover": {
+      borderColor: "var(--text-muted)",
+    },
 
     "&:focus": {
       borderColor: "var(--clay)",
@@ -179,7 +305,7 @@ const field = css({
   },
 
   "& > textarea": {
-    minHeight: "100px",
+    minHeight: "110px",
     resize: "vertical",
   },
 });
@@ -259,15 +385,31 @@ const checkbox_field = css({
 });
 
 const form_buttons = css({
+  position: "sticky",
+  bottom: "-28px",
+  zIndex: 10,
+
   display: "flex",
   justifyContent: "flex-end",
 
-  marginTop: "8px",
+  margin: "4px -28px -28px",
+  padding: "18px 28px",
+
   gap: "10px",
+
+  backgroundColor: "var(--bg-card)",
+  borderTop: "1px solid var(--sand-line)",
+
+  "@media (max-width: 600px)": {
+    bottom: "-20px",
+
+    margin: "4px -20px -20px",
+    padding: "16px 20px",
+  },
 
   "@media (max-width: 480px)": {
     display: "grid",
-    gridTemplateColumns: "1fr",
+    gridTemplateColumns: "1fr 1fr",
 
     "& button": {
       width: "100%",
@@ -301,6 +443,60 @@ const save_button = css({
   fontWeight: "700",
 
   cursor: "pointer",
+});
+
+const translate_button = css({
+  alignSelf: "flex-start",
+
+  padding: "9px 14px",
+
+  backgroundColor: "var(--bg-card)",
+  border: "1px solid var(--sand-line)",
+  borderRadius: "100px",
+
+  color: "var(--text-main)",
+
+  font: "inherit",
+  fontSize: "13px",
+  fontWeight: "600",
+
+  cursor: "pointer",
+
+  transition: "border-color 0.15s ease, opacity 0.15s ease",
+
+  "&:hover:not(:disabled)": {
+    borderColor: "var(--text-muted)",
+  },
+
+  "&:disabled": {
+    opacity: 0.45,
+    cursor: "not-allowed",
+  },
+});
+
+const availability_box = css({
+  display: "flex",
+  alignItems: "center",
+
+  minHeight: "44px",
+  boxSizing: "border-box",
+
+  padding: "0 14px",
+
+  backgroundColor: "var(--bg-card)",
+  border: "1px solid var(--sand-line)",
+  borderRadius: "12px",
+});
+
+const image_section_content = css({
+  display: "flex",
+  alignItems: "flex-start",
+
+  gap: "20px",
+
+  "@media (max-width: 520px)": {
+    flexDirection: "column",
+  },
 });
 
 // ----------------------------------------------------------------------
@@ -401,8 +597,15 @@ function AProd_Modal({ language, product, onClose, onSave }: Props) {
     event.preventDefault();
 
     const price = Number(formData.price);
+    const stock = Number(formData.stock);
 
-    if (!formData.name.trim() || Number.isNaN(price) || price <= 0) {
+    if (
+      !formData.name.trim() ||
+      Number.isNaN(price) ||
+      price <= 0 ||
+      !Number.isInteger(stock) ||
+      stock < 0
+    ) {
       return;
     }
 
@@ -434,7 +637,11 @@ function AProd_Modal({ language, product, onClose, onSave }: Props) {
       roastColor: formData.roastColor,
       weight: formData.weight,
       price,
-      description: { uk: descriptionUk, en: descriptionEn },
+      stock,
+      description: {
+        uk: descriptionUk,
+        en: descriptionEn,
+      },
       category: formData.category,
       inStock: formData.inStock,
       image: formData.image,
@@ -481,205 +688,338 @@ function AProd_Modal({ language, product, onClose, onSave }: Props) {
         }}
       >
         <div className={modal} onMouseDown={(event) => event.stopPropagation()}>
-          <h2>{product ? t.editTitle : t.addTitle}</h2>
-          <form className={form} onSubmit={handleSubmit}>
-            <div className={field}>
-              <label>{t.productImage}</label>
-              <div className={image_upload}>
-                {formData.image && (
-                  <div className={image_preview}>
-                    <img src={formData.image} alt={t.imagePreview} />
-                  </div>
-                )}
-                <div className={image_actions}>
-                  <label>
-                    {formData.image ? t.changeImage : t.uploadImage}
-                    <input
-                      type="file"
-                      accept="image/png,image/jpeg,image/webp"
-                      onChange={handleImageSelect}
-                    />
-                  </label>
+          {/* HEADER */}
+          <div className={modal_header}>
+            <div>
+              <h2>{product ? t.editTitle : t.addTitle}</h2>
+
+              <p>
+                {language === "uk"
+                  ? product
+                    ? "Редагуйте інформацію, ціну, залишок і параметри товару."
+                    : "Додайте новий товар до каталогу магазину."
+                  : product
+                    ? "Edit product information, price, stock and settings."
+                    : "Add a new product to the shop catalogue."}
+              </p>
+            </div>
+
+            <button
+              type="button"
+              className={close_button}
+              onClick={onClose}
+              aria-label={language === "uk" ? "Закрити" : "Close"}
+            >
+              <img src={close_icon} alt="" />
+            </button>
+          </div>
+
+          {/* SCROLLABLE BODY */}
+          <div className={modal_body}>
+            <form className={form} onSubmit={handleSubmit}>
+              {/* ---------------------------------------------------------- */}
+              {/* IMAGE */}
+              {/* ---------------------------------------------------------- */}
+
+              <section className={form_section}>
+                <h3 className={section_title}>
+                  {language === "uk" ? "Зображення товару" : "Product image"}
+                </h3>
+
+                <div className={image_section_content}>
                   {formData.image && (
-                    <>
-                      <button
-                        type="button"
-                        onClick={() => setImageEditorSrc(formData.image)}
-                      >
-                        {t.editImage}
-                      </button>
-                      <button
-                        type="button"
-                        className={remove_image_button}
-                        onClick={() =>
-                          setFormData((current) => ({
-                            ...current,
-                            image: "",
-                            imageStoragePath: undefined,
-                            imagePublicId: undefined,
-                          }))
-                        }
-                      >
-                        {t.removeImage}
-                      </button>
-                    </>
+                    <div className={image_preview}>
+                      <img src={formData.image} alt={t.imagePreview} />
+                    </div>
                   )}
+
+                  <div className={image_upload}>
+                    <div className={image_actions}>
+                      <label>
+                        {formData.image ? t.changeImage : t.uploadImage}
+
+                        <input
+                          type="file"
+                          accept="image/png,image/jpeg,image/webp"
+                          onChange={handleImageSelect}
+                        />
+                      </label>
+
+                      {formData.image && (
+                        <>
+                          <button
+                            type="button"
+                            onClick={() => setImageEditorSrc(formData.image)}
+                          >
+                            {t.editImage}
+                          </button>
+
+                          <button
+                            type="button"
+                            className={remove_image_button}
+                            onClick={() =>
+                              setFormData((current) => ({
+                                ...current,
+                                image: "",
+                                imageStoragePath: undefined,
+                                imagePublicId: undefined,
+                              }))
+                            }
+                          >
+                            {t.removeImage}
+                          </button>
+                        </>
+                      )}
+                    </div>
+
+                    {!formData.image && (
+                      <p
+                        style={{
+                          margin: 0,
+                          color: "var(--text-muted)",
+                          fontSize: "12px",
+                          lineHeight: "150%",
+                        }}
+                      >
+                        {language === "uk"
+                          ? "PNG, JPEG або WEBP. Максимальний розмір — 10 МБ."
+                          : "PNG, JPEG or WEBP. Maximum size — 10 MB."}
+                      </p>
+                    )}
+                  </div>
                 </div>
+              </section>
+
+              {/* ---------------------------------------------------------- */}
+              {/* BASIC INFORMATION */}
+              {/* ---------------------------------------------------------- */}
+
+              <section className={form_section}>
+                <h3 className={section_title}>
+                  {language === "uk"
+                    ? "Основна інформація"
+                    : "Basic information"}
+                </h3>
+
+                <div className={fields_grid}>
+                  <div className={`${field} ${full_width}`}>
+                    <label htmlFor="product-name">{t.name}</label>
+
+                    <input
+                      id="product-name"
+                      type="text"
+                      value={formData.name}
+                      onChange={(event) =>
+                        setFormData((current) => ({
+                          ...current,
+                          name: event.target.value,
+                        }))
+                      }
+                      required
+                    />
+                  </div>
+
+                  <div className={field}>
+                    <label htmlFor="product-description-uk">
+                      {language === "uk"
+                        ? "Опис — українською"
+                        : "Description — Ukrainian"}
+                    </label>
+
+                    <textarea
+                      id="product-description-uk"
+                      rows={5}
+                      value={formData.descriptionUk}
+                      onChange={(event) =>
+                        setFormData((current) => ({
+                          ...current,
+                          descriptionUk: event.target.value,
+                        }))
+                      }
+                    />
+                  </div>
+
+                  <div className={field}>
+                    <label htmlFor="product-description-en">
+                      {language === "uk"
+                        ? "Опис — англійською"
+                        : "Description — English"}
+                    </label>
+
+                    <textarea
+                      id="product-description-en"
+                      rows={5}
+                      value={formData.descriptionEn}
+                      onChange={(event) =>
+                        setFormData((current) => ({
+                          ...current,
+                          descriptionEn: event.target.value,
+                        }))
+                      }
+                    />
+
+                    <button
+                      type="button"
+                      className={translate_button}
+                      onClick={handleTranslateDescription}
+                      disabled={isTranslating || !formData.descriptionUk.trim()}
+                    >
+                      {isTranslating
+                        ? language === "uk"
+                          ? "Перекладаємо..."
+                          : "Translating..."
+                        : language === "uk"
+                          ? "Перекласти англійською"
+                          : "Translate to English"}
+                    </button>
+                  </div>
+                </div>
+              </section>
+
+              {/* ---------------------------------------------------------- */}
+              {/* PRODUCT SETTINGS */}
+              {/* ---------------------------------------------------------- */}
+
+              <section className={form_section}>
+                <h3 className={section_title}>
+                  {language === "uk"
+                    ? "Налаштування товару"
+                    : "Product settings"}
+                </h3>
+
+                <div className={fields_grid}>
+                  <div className={field}>
+                    <label>{t.category}</label>
+
+                    <AProd_CustomSelect
+                      value={formData.category}
+                      options={categoryOptions}
+                      onChange={(category) =>
+                        setFormData((current) => ({
+                          ...current,
+                          category,
+                        }))
+                      }
+                    />
+                  </div>
+
+                  <div className={field}>
+                    <label>{t.roast}</label>
+
+                    <AProd_CustomSelect
+                      value={formData.roast}
+                      options={roastOptions}
+                      onChange={handleRoastChange}
+                    />
+                  </div>
+
+                  <div className={field}>
+                    <label>{t.weight}</label>
+
+                    <AProd_CustomSelect
+                      value={formData.weight}
+                      options={weightOptions}
+                      onChange={(weight) =>
+                        setFormData((current) => ({
+                          ...current,
+                          weight,
+                        }))
+                      }
+                    />
+                  </div>
+
+                  <div className={field}>
+                    <label htmlFor="product-price">{t.price}</label>
+
+                    <input
+                      id="product-price"
+                      type="number"
+                      min="1"
+                      step="1"
+                      value={formData.price}
+                      onChange={(event) =>
+                        setFormData((current) => ({
+                          ...current,
+                          price: event.target.value,
+                        }))
+                      }
+                      required
+                    />
+                  </div>
+
+                  <div className={field}>
+                    <label htmlFor="product-stock-quantity">
+                      {language === "uk"
+                        ? "Кількість на складі"
+                        : "Stock quantity"}
+                    </label>
+
+                    <input
+                      id="product-stock-quantity"
+                      type="number"
+                      min="0"
+                      step="1"
+                      value={formData.stock}
+                      onChange={(event) =>
+                        setFormData((current) => ({
+                          ...current,
+                          stock: event.target.value,
+                        }))
+                      }
+                      required
+                    />
+                  </div>
+
+                  <div className={field}>
+                    <label>{t.availability}</label>
+
+                    <div className={availability_box}>
+                      <div className={checkbox_field}>
+                        <input
+                          id="product-stock"
+                          type="checkbox"
+                          checked={formData.inStock}
+                          onChange={(event) =>
+                            setFormData((current) => ({
+                              ...current,
+                              inStock: event.target.checked,
+                            }))
+                          }
+                        />
+
+                        <label htmlFor="product-stock">{t.inStock}</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              {/* ---------------------------------------------------------- */}
+              {/* ACTIONS */}
+              {/* ---------------------------------------------------------- */}
+
+              <div className={form_buttons}>
+                <button
+                  type="button"
+                  className={cancel_button}
+                  onClick={onClose}
+                >
+                  {t.cancel}
+                </button>
+
+                <button
+                  type="submit"
+                  className={save_button}
+                  disabled={isTranslating}
+                >
+                  {product ? t.saveChanges : t.add}
+                </button>
               </div>
-            </div>
-            <div className={field}>
-              <label htmlFor="product-name">{t.name}</label>
-              <input
-                id="product-name"
-                type="text"
-                value={formData.name}
-                onChange={(event) =>
-                  setFormData((current) => ({
-                    ...current,
-                    name: event.target.value,
-                  }))
-                }
-                required
-              />
-            </div>
-            <div className={field}>
-              <label htmlFor="product-description-uk">
-                {language === "uk"
-                  ? "Опис — українською"
-                  : "Description — Ukrainian"}
-              </label>
-              <textarea
-                id="product-description-uk"
-                rows={4}
-                value={formData.descriptionUk}
-                onChange={(event) =>
-                  setFormData((current) => ({
-                    ...current,
-                    descriptionUk: event.target.value,
-                  }))
-                }
-              />
-            </div>
-            <div className={field}>
-              <label htmlFor="product-description-en">
-                {language === "uk"
-                  ? "Опис — англійською"
-                  : "Description — English"}
-              </label>
-              <textarea
-                id="product-description-en"
-                rows={4}
-                value={formData.descriptionEn}
-                onChange={(event) =>
-                  setFormData((current) => ({
-                    ...current,
-                    descriptionEn: event.target.value,
-                  }))
-                }
-              />
-              <button
-                type="button"
-                onClick={handleTranslateDescription}
-                disabled={isTranslating || !formData.descriptionUk.trim()}
-                style={{
-                  alignSelf: "flex-start",
-                  padding: "9px 14px",
-                  border: "1px solid var(--sand-line)",
-                  borderRadius: "100px",
-                  background: "var(--chip-bg)",
-                  color: "var(--text-main)",
-                  font: "inherit",
-                  fontSize: "13px",
-                  fontWeight: 600,
-                  cursor: isTranslating ? "wait" : "pointer",
-                }}
-              >
-                {isTranslating
-                  ? language === "uk"
-                    ? "Перекладаємо..."
-                    : "Translating..."
-                  : language === "uk"
-                    ? "Перекласти англійською"
-                    : "Translate to English"}
-              </button>
-            </div>
-            <div className={field}>
-              <label>{t.category}</label>
-              <AProd_CustomSelect
-                value={formData.category}
-                options={categoryOptions}
-                onChange={(category) =>
-                  setFormData((current) => ({ ...current, category }))
-                }
-              />
-            </div>
-            <div className={field}>
-              <label>{t.roast}</label>
-              <AProd_CustomSelect
-                value={formData.roast}
-                options={roastOptions}
-                onChange={handleRoastChange}
-              />
-            </div>
-            <div className={field}>
-              <label>{t.weight}</label>
-              <AProd_CustomSelect
-                value={formData.weight}
-                options={weightOptions}
-                onChange={(weight) =>
-                  setFormData((current) => ({ ...current, weight }))
-                }
-              />
-            </div>
-            <div className={field}>
-              <label htmlFor="product-price">{t.price}</label>
-              <input
-                id="product-price"
-                type="number"
-                min="1"
-                step="1"
-                value={formData.price}
-                onChange={(event) =>
-                  setFormData((current) => ({
-                    ...current,
-                    price: event.target.value,
-                  }))
-                }
-                required
-              />
-            </div>
-            <div className={field}>
-              <label>{t.availability}</label>
-              <div className={checkbox_field}>
-                <input
-                  id="product-stock"
-                  type="checkbox"
-                  checked={formData.inStock}
-                  onChange={(event) =>
-                    setFormData((current) => ({
-                      ...current,
-                      inStock: event.target.checked,
-                    }))
-                  }
-                />
-                <label htmlFor="product-stock">{t.inStock}</label>
-              </div>
-            </div>
-            <div className={form_buttons}>
-              <button type="button" className={cancel_button} onClick={onClose}>
-                {t.cancel}
-              </button>
-              <button
-                type="submit"
-                className={save_button}
-                disabled={isTranslating}
-              >
-                {product ? t.saveChanges : t.add}
-              </button>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
       </div>
+
       {imageEditorSrc && (
         <ImageEditorModal
           language={language}

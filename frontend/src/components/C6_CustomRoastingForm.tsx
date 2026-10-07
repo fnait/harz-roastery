@@ -280,6 +280,76 @@ const submit_button = css({
   },
 });
 
+const success_content = css({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+
+  padding: "28px 10px 8px",
+
+  textAlign: "center",
+});
+
+const success_icon = css({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+
+  width: "64px",
+  height: "64px",
+
+  marginBottom: "22px",
+
+  backgroundColor: "var(--clay)",
+  borderRadius: "50%",
+
+  color: "#f3ede6",
+  fontSize: "30px",
+  fontWeight: "700",
+});
+
+const success_title = css({
+  margin: "0 0 10px",
+
+  color: "var(--text-main)",
+
+  fontSize: "26px",
+  fontWeight: "800",
+});
+
+const success_text = css({
+  maxWidth: "460px",
+
+  margin: "0 0 28px",
+
+  color: "var(--text-muted)",
+
+  fontSize: "14px",
+  lineHeight: "160%",
+});
+
+const success_button = css({
+  minWidth: "150px",
+
+  padding: "13px 24px",
+
+  backgroundColor: "var(--clay)",
+  border: "none",
+  borderRadius: "100px",
+
+  color: "#f3ede6",
+
+  font: "inherit",
+  fontSize: "14px",
+  fontWeight: "700",
+
+  cursor: "pointer",
+
+  "&:hover": {
+    opacity: 0.9,
+  },
+});
+
 // ----------------------------------------------------------------------
 // CUSTOM SELECT STYLES
 // ----------------------------------------------------------------------
@@ -473,8 +543,8 @@ function C6_CustomRoastingForm({ language, onClose }: Props) {
 
   const [formData, setFormData] = useState<FormState>(initialForm);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
-  // Lock page scrolling while the modal is open.
   useEffect(() => {
     const previousOverflow = document.body.style.overflow;
 
@@ -520,7 +590,7 @@ function C6_CustomRoastingForm({ language, onClose }: Props) {
         message: formData.message.trim(),
       });
 
-      onClose();
+      setIsSuccess(true);
     } catch (error) {
       console.error("Custom roasting request failed:", error);
 
@@ -535,6 +605,42 @@ function C6_CustomRoastingForm({ language, onClose }: Props) {
       setIsSubmitting(false);
     }
   };
+
+  if (isSuccess) {
+    return (
+      <div
+        className={overlay}
+        onMouseDown={(event) => {
+          if (event.target === event.currentTarget) {
+            onClose();
+          }
+        }}
+      >
+        <div
+          className={cx(modal, "font-onest")}
+          onMouseDown={(event) => event.stopPropagation()}
+        >
+          <div className={success_content}>
+            <div className={success_icon}>✓</div>
+
+            <h2 className={success_title}>
+              {isUk ? "Дякуємо за заявку!" : "Thank you for your request!"}
+            </h2>
+
+            <p className={success_text}>
+              {isUk
+                ? "Ми отримали вашу заявку на індивідуальне обсмажування. Ми зв’яжемося з вами найближчим часом, щоб уточнити деталі."
+                : "We have received your custom roasting request. We will contact you shortly to confirm the details."}
+            </p>
+
+            <button type="button" className={success_button} onClick={onClose}>
+              {isUk ? "Готово" : "Done"}
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div

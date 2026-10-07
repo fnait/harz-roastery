@@ -13,6 +13,7 @@ export type OrderItem = {
   price: number;
   image: string;
   quantity: number;
+  stock: number;
 };
 
 export type OrderCustomer = {

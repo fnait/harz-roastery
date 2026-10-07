@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent } from "react";
+import { useState, type FormEvent } from "react";
 import { css, cx } from "@emotion/css";
 
 import { createOrder } from "../services/orderApi";
@@ -16,7 +16,8 @@ type Props = {
   cartItems: OrderItem[];
   clearCart: () => void;
   onClose: () => void;
-  onOrderComplete: () => void;
+  onOrderComplete: () => void | Promise<void>;
+  onSuccessClose: () => void;
 };
 
 // ----------------------------------------------------------------------
@@ -309,6 +310,76 @@ const submit_button = css({
   },
 });
 
+const success_content = css({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+
+  padding: "28px 10px 8px",
+
+  textAlign: "center",
+});
+
+const success_icon = css({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+
+  width: "64px",
+  height: "64px",
+
+  marginBottom: "22px",
+
+  backgroundColor: "var(--clay)",
+  borderRadius: "50%",
+
+  color: "#f3ede6",
+  fontSize: "30px",
+  fontWeight: "700",
+});
+
+const success_title = css({
+  margin: "0 0 10px",
+
+  color: "var(--text-main)",
+
+  fontSize: "26px",
+  fontWeight: "800",
+});
+
+const success_text = css({
+  maxWidth: "460px",
+
+  margin: "0 0 28px",
+
+  color: "var(--text-muted)",
+
+  fontSize: "14px",
+  lineHeight: "160%",
+});
+
+const success_button = css({
+  minWidth: "150px",
+
+  padding: "13px 24px",
+
+  backgroundColor: "var(--clay)",
+  border: "none",
+  borderRadius: "100px",
+
+  color: "#f3ede6",
+
+  font: "inherit",
+  fontSize: "14px",
+  fontWeight: "700",
+
+  cursor: "pointer",
+
+  "&:hover": {
+    opacity: 0.9,
+  },
+});
+
 // ----------------------------------------------------------------------
 // COMPONENT
 // ----------------------------------------------------------------------
@@ -319,10 +390,13 @@ function Checkout({
   clearCart,
   onClose,
   onOrderComplete,
+  onSuccessClose,
 }: Props) {
   const isUk = language === "uk";
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const [customer, setCustomer] = useState<OrderCustomer>({
     name: "",
@@ -332,16 +406,6 @@ function Checkout({
     address: "",
     comment: "",
   });
-
-  useEffect(() => {
-    const previousOverflow = document.body.style.overflow;
-
-    document.body.style.overflow = "hidden";
-
-    return () => {
-      document.body.style.overflow = previousOverflow;
-    };
-  }, []);
 
   const totalPrice = cartItems.reduce(
     (sum, item) => sum + item.price * item.quantity,
@@ -382,7 +446,8 @@ function Checkout({
       });
 
       clearCart();
-      onOrderComplete();
+      await onOrderComplete();
+      setIsSuccess(true);
     } catch (error) {
       console.error("Order creation failed:", error);
 
@@ -397,6 +462,48 @@ function Checkout({
       setIsSubmitting(false);
     }
   };
+
+  if (isSuccess) {
+    return (
+      <div
+        className={overlay}
+        onMouseDown={(event) => {
+          if (event.target === event.currentTarget) {
+            onSuccessClose();
+          }
+        }}
+      >
+        <div
+          className={checkout_card}
+          onMouseDown={(event) => event.stopPropagation()}
+        >
+          <div className={success_content}>
+            <div className={success_icon}>✓</div>
+
+            <h2 className={success_title}>
+              {language === "uk"
+                ? "Дякуємо за замовлення!"
+                : "Thank you for your order!"}
+            </h2>
+
+            <p className={success_text}>
+              {language === "uk"
+                ? "Ваше замовлення прийнято. Ми зв’яжемося з вами найближчим часом, щоб уточнити деталі."
+                : "Your order has been received. We will contact you shortly to confirm the details."}
+            </p>
+
+            <button
+              type="button"
+              className={success_button}
+              onClick={onSuccessClose}
+            >
+              {language === "uk" ? "Готово" : "Done"}
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div

@@ -17,6 +17,7 @@ export type CartProduct = {
   description: LocalizedProductText;
   category: "single-origin" | "espresso" | "rare" | "decaf";
   inStock: boolean;
+  stock: number;
   image: string;
   // Firebase Storage — primary
   imageStoragePath?: string;
@@ -45,6 +46,7 @@ export const initialProducts: CartProduct[] = [
     inStock: true,
     image: "",
     popularity: 2,
+    stock: 10,
   },
 
   {
@@ -62,6 +64,7 @@ export const initialProducts: CartProduct[] = [
     inStock: true,
     image: "",
     popularity: 3,
+    stock: 10,
   },
 
   {
@@ -79,6 +82,7 @@ export const initialProducts: CartProduct[] = [
     inStock: true,
     image: "",
     popularity: 4,
+    stock: 10,
   },
 
   {
@@ -96,6 +100,7 @@ export const initialProducts: CartProduct[] = [
     inStock: true,
     image: "",
     popularity: 6,
+    stock: 10,
   },
 
   {
@@ -113,6 +118,7 @@ export const initialProducts: CartProduct[] = [
     inStock: true,
     image: "",
     popularity: 5,
+    stock: 10,
   },
 
   {
@@ -130,6 +136,7 @@ export const initialProducts: CartProduct[] = [
     inStock: true,
     image: "",
     popularity: 1,
+    stock: 10,
   },
 
   {
@@ -147,6 +154,7 @@ export const initialProducts: CartProduct[] = [
     inStock: true,
     image: "",
     popularity: 7,
+    stock: 10,
   },
 
   {
@@ -164,6 +172,7 @@ export const initialProducts: CartProduct[] = [
     inStock: true,
     image: "",
     popularity: 10,
+    stock: 10,
   },
 
   {
@@ -181,6 +190,7 @@ export const initialProducts: CartProduct[] = [
     inStock: true,
     image: "",
     popularity: 9,
+    stock: 10,
   },
 
   {
@@ -198,6 +208,7 @@ export const initialProducts: CartProduct[] = [
     inStock: true,
     image: "",
     popularity: 23,
+    stock: 10,
   },
 
   {
@@ -215,6 +226,7 @@ export const initialProducts: CartProduct[] = [
     inStock: true,
     image: "",
     popularity: 56,
+    stock: 10,
   },
 
   {
@@ -232,5 +244,6 @@ export const initialProducts: CartProduct[] = [
     inStock: true,
     image: "",
     popularity: 3,
+    stock: 10,
   },
 ];

@@ -28,6 +28,7 @@ type HeaderProps = {
   decreaseQuantity: (id: number) => void;
   removeFromCart: (id: number) => void;
   clearCart: () => void;
+  refreshProducts: () => Promise<void>;
 };
 
 // ----------------------------------------------------------------------
@@ -337,6 +338,7 @@ function Header({
   decreaseQuantity,
   removeFromCart,
   clearCart,
+  refreshProducts,
 }: HeaderProps) {
   const [theme, setTheme] = useState<"dark" | "light">("dark");
   const [menuOpen, setMenuOpen] = useState(false);
@@ -449,6 +451,7 @@ function Header({
           decreaseQuantity={decreaseQuantity}
           removeFromCart={removeFromCart}
           clearCart={clearCart}
+          refreshProducts={refreshProducts}
         />
       )}
     </header>

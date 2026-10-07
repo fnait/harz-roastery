@@ -282,9 +282,6 @@ function AdminPanel({
   // ADMIN DATA
   // ----------------------------------------------------------------------
 
-  // Loaded once after Firebase confirms the signed-in user, so the dashboard
-  // counters and the admin pages share the same data without extra requests.
-
   const [ordersLoading, setOrdersLoading] = useState(true);
   const [courseEnrollmentsLoading, setCourseEnrollmentsLoading] =
     useState(true);

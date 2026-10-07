@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import Header from "./components/Header";
@@ -28,9 +28,10 @@ import type { CartProduct } from "./data/products";
 type MainSiteProps = {
   products: CartProduct[];
   courses: Course[];
+  refreshProducts: () => Promise<void>;
 };
 
-function MainSite({ products, courses }: MainSiteProps) {
+function MainSite({ products, courses, refreshProducts }: MainSiteProps) {
   const [language, setLanguage] = useState<"en" | "uk">("en");
   const [cartItems, setCartItems] = useState<OrderItem[]>([]);
 
@@ -39,26 +40,61 @@ function MainSite({ products, courses }: MainSiteProps) {
   };
 
   const addToCart = (product: CartProduct) => {
+    if (!product.inStock || product.stock <= 0) {
+      return;
+    }
+
     setCartItems((currentItems) => {
       const existingItem = currentItems.find((item) => item.id === product.id);
 
       if (existingItem) {
+        if (existingItem.quantity >= product.stock) {
+          return currentItems;
+        }
+
         return currentItems.map((item) =>
           item.id === product.id
-            ? { ...item, quantity: item.quantity + 1 }
+            ? {
+                ...item,
+                stock: product.stock,
+                quantity: item.quantity + 1,
+              }
             : item,
         );
       }
 
-      return [...currentItems, { ...product, quantity: 1 }];
+      return [
+        ...currentItems,
+        {
+          id: product.id,
+          name: product.name,
+          roast: product.roast,
+          weight: product.weight,
+          price: product.price,
+          image: product.image,
+          stock: product.stock,
+          quantity: 1,
+        },
+      ];
     });
   };
 
   const increaseQuantity = (id: number) => {
     setCartItems((currentItems) =>
-      currentItems.map((item) =>
-        item.id === id ? { ...item, quantity: item.quantity + 1 } : item,
-      ),
+      currentItems.map((item) => {
+        if (item.id !== id) {
+          return item;
+        }
+
+        if (item.quantity >= item.stock) {
+          return item;
+        }
+
+        return {
+          ...item,
+          quantity: item.quantity + 1,
+        };
+      }),
     );
   };
 
@@ -94,6 +130,7 @@ function MainSite({ products, courses }: MainSiteProps) {
         decreaseQuantity={decreaseQuantity}
         removeFromCart={removeFromCart}
         clearCart={clearCart}
+        refreshProducts={refreshProducts}
       />
       <Component1 language={language} />
       <C2_who_we_are language={language} />
@@ -118,31 +155,19 @@ function App() {
 
   const [products, setProducts] = useState<CartProduct[]>([]);
 
-  useEffect(() => {
-    let cancelled = false;
+  const refreshProducts = useCallback(async () => {
+    try {
+      const firestoreProducts = await getProducts();
 
-    const loadProducts = async () => {
-      try {
-        const firestoreProducts = await getProducts();
-
-        if (!cancelled) {
-          setProducts(firestoreProducts);
-        }
-      } catch (error) {
-        console.error("Failed to load products from backend:", error);
-
-        if (!cancelled) {
-          setProducts([]);
-        }
-      }
-    };
-
-    void loadProducts();
-
-    return () => {
-      cancelled = true;
-    };
+      setProducts(firestoreProducts);
+    } catch (error) {
+      console.error("Failed to load products from backend:", error);
+    }
   }, []);
+
+  useEffect(() => {
+    void refreshProducts();
+  }, [refreshProducts]);
 
   // ----------------------------------------------------------------------
   // COURSES
@@ -207,7 +232,13 @@ function App() {
       <Routes>
         <Route
           path="/"
-          element={<MainSite products={products} courses={courses} />}
+          element={
+            <MainSite
+              products={products}
+              courses={courses}
+              refreshProducts={refreshProducts}
+            />
+          }
         />
         <Route
           path="/admin"

@@ -62,6 +62,9 @@ function isValidProduct(value: unknown): value is Product {
     typeof product.price === "number" &&
     Number.isFinite(product.price) &&
     product.price > 0 &&
+    typeof product.stock === "number" &&
+    Number.isInteger(product.stock) &&
+    product.stock >= 0 &&
     isLocalizedText(product.description) &&
     isProductCategory(product.category) &&
     typeof product.inStock === "boolean" &&

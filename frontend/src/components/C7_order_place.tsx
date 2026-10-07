@@ -20,6 +20,7 @@ type Props = {
   decreaseQuantity: (id: number) => void;
   removeFromCart: (id: number) => void;
   clearCart: () => void;
+  refreshProducts: () => Promise<void>;
 };
 
 // ----------------------------------------------------------------------
@@ -272,6 +273,11 @@ const quantity = css({
     fontSize: "18px",
 
     cursor: "pointer",
+
+    "&:disabled": {
+      opacity: 0.3,
+      cursor: "not-allowed",
+    },
   },
 
   "& span": {
@@ -414,6 +420,7 @@ function C7_order_place({
   decreaseQuantity,
   removeFromCart,
   clearCart,
+  refreshProducts,
 }: Props) {
   const t = translations[language];
 
@@ -522,6 +529,7 @@ function C7_order_place({
                     <button
                       type="button"
                       onClick={() => increaseQuantity(item.id)}
+                      disabled={item.quantity >= item.stock}
                       aria-label={`${t.cart.increase} ${item.name}`}
                     >
                       +
@@ -564,7 +572,10 @@ function C7_order_place({
           cartItems={cartItems}
           clearCart={clearCart}
           onClose={() => setCheckoutOpen(false)}
-          onOrderComplete={() => {
+          onOrderComplete={async () => {
+            await refreshProducts();
+          }}
+          onSuccessClose={() => {
             setCheckoutOpen(false);
             onClose();
           }}

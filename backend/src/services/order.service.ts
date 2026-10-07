@@ -73,65 +73,124 @@ export async function getOrders(): Promise<Order[]> {
 // ----------------------------------------------------------------------
 
 export async function createOrder(input: CreateOrderInput): Promise<Order> {
-  const productIds = [...new Set(input.items.map((item) => item.productId))];
-
-  const productRefs = productIds.map((id) =>
-    firestore.collection(PRODUCTS_COLLECTION).doc(String(id)),
-  );
-
-  const productSnapshots = await firestore.getAll(...productRefs);
-
-  const productMap = new Map<number, Product>();
-
-  for (const snapshot of productSnapshots) {
-    if (!snapshot.exists) {
-      continue;
-    }
-
-    const product = snapshot.data() as Product;
-
-    productMap.set(product.id, product);
+  if (input.items.length === 0) {
+    throw new Error("Order must contain at least one product.");
   }
 
-  const orderItems: OrderItem[] = input.items.map((item) => {
-    const product = productMap.get(item.productId);
+  const requestedQuantities = new Map<number, number>();
 
-    if (!product) {
-      throw new Error(`Product with id ${item.productId} was not found.`);
+  for (const item of input.items) {
+    if (
+      !Number.isInteger(item.productId) ||
+      item.productId <= 0 ||
+      !Number.isInteger(item.quantity) ||
+      item.quantity <= 0
+    ) {
+      throw new Error("Invalid order item.");
     }
 
-    if (!product.inStock) {
-      throw new Error(`${product.name} is out of stock.`);
-    }
+    const currentQuantity = requestedQuantities.get(item.productId) ?? 0;
 
-    return {
-      id: product.id,
-      name: product.name,
-      roast: product.roast,
-      weight: product.weight,
-      price: product.price,
-      image: product.image,
-      quantity: item.quantity,
-    };
-  });
-
-  const total = orderItems.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0,
-  );
+    requestedQuantities.set(item.productId, currentQuantity + item.quantity);
+  }
 
   const id = createOrderId();
+  const orderRef = getOrdersCollection().doc(String(id));
 
-  const order: Order = {
-    id,
-    createdAt: new Date().toISOString(),
-    customer: input.customer,
-    items: orderItems,
-    total,
-    status: "new",
-  };
+  const order = await firestore.runTransaction(async (transaction) => {
+    const requestedItems = [...requestedQuantities.entries()];
 
-  await getOrdersCollection().doc(String(id)).set(order);
+    const productRefs = requestedItems.map(([productId]) =>
+      firestore.collection(PRODUCTS_COLLECTION).doc(String(productId)),
+    );
+
+    // Все товары читаем внутри transaction.
+    const productSnapshots = await transaction.getAll(...productRefs);
+
+    const productMap = new Map<number, Product>();
+
+    for (const snapshot of productSnapshots) {
+      if (!snapshot.exists) {
+        throw new Error(`Product ${snapshot.id} was not found.`);
+      }
+
+      const product = snapshot.data() as Product;
+
+      productMap.set(product.id, product);
+    }
+
+    const orderItems: OrderItem[] = [];
+
+    for (const [productId, requestedQuantity] of requestedItems) {
+      const product = productMap.get(productId);
+
+      if (!product) {
+        throw new Error(`Product with id ${productId} was not found.`);
+      }
+
+      if (!product.inStock || product.stock <= 0) {
+        throw new Error(`${product.name} is out of stock.`);
+      }
+
+      if (requestedQuantity > product.stock) {
+        throw new Error(
+          `Only ${product.stock} item(s) of ${product.name} are available.`,
+        );
+      }
+
+      orderItems.push({
+        id: product.id,
+        name: product.name,
+        roast: product.roast,
+        weight: product.weight,
+        price: product.price,
+        image: product.image,
+        quantity: requestedQuantity,
+      });
+    }
+
+    const total = orderItems.reduce(
+      (sum, item) => sum + item.price * item.quantity,
+      0,
+    );
+
+    const createdOrder: Order = {
+      id,
+      createdAt: new Date().toISOString(),
+      customer: input.customer,
+      items: orderItems,
+      total,
+      status: "new",
+    };
+
+    // Списываем остатки.
+    for (const [productId, requestedQuantity] of requestedItems) {
+      const product = productMap.get(productId);
+
+      if (!product) {
+        throw new Error(`Product with id ${productId} was not found.`);
+      }
+
+      const productRef = firestore
+        .collection(PRODUCTS_COLLECTION)
+        .doc(String(productId));
+
+      const newStock = product.stock - requestedQuantity;
+
+      transaction.update(productRef, {
+        stock: newStock,
+
+        // Если продали последнюю единицу,
+        // товар автоматически становится недоступным.
+        inStock: newStock > 0,
+      });
+    }
+
+    // Заказ создаётся в той же transaction.
+    transaction.set(orderRef, createdOrder);
+
+    return createdOrder;
+  });
 
   return order;
 }

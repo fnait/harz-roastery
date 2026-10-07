@@ -20,6 +20,7 @@ export const defaultProducts: Product[] = [
     inStock: true,
     image: "",
     popularity: 2,
+    stock: 10,
   },
 
   {
@@ -37,6 +38,7 @@ export const defaultProducts: Product[] = [
     inStock: true,
     image: "",
     popularity: 3,
+    stock: 10,
   },
 
   {
@@ -54,6 +56,7 @@ export const defaultProducts: Product[] = [
     inStock: true,
     image: "",
     popularity: 4,
+    stock: 10,
   },
 
   {
@@ -71,6 +74,7 @@ export const defaultProducts: Product[] = [
     inStock: true,
     image: "",
     popularity: 6,
+    stock: 10,
   },
 
   {
@@ -88,6 +92,7 @@ export const defaultProducts: Product[] = [
     inStock: true,
     image: "",
     popularity: 5,
+    stock: 10,
   },
 
   {
@@ -105,6 +110,7 @@ export const defaultProducts: Product[] = [
     inStock: true,
     image: "",
     popularity: 1,
+    stock: 10,
   },
 
   {
@@ -122,6 +128,7 @@ export const defaultProducts: Product[] = [
     inStock: true,
     image: "",
     popularity: 7,
+    stock: 10,
   },
 
   {
@@ -139,6 +146,7 @@ export const defaultProducts: Product[] = [
     inStock: true,
     image: "",
     popularity: 10,
+    stock: 10,
   },
 
   {
@@ -156,6 +164,7 @@ export const defaultProducts: Product[] = [
     inStock: true,
     image: "",
     popularity: 9,
+    stock: 10,
   },
 
   {
@@ -173,6 +182,7 @@ export const defaultProducts: Product[] = [
     inStock: true,
     image: "",
     popularity: 23,
+    stock: 10,
   },
 
   {
@@ -190,6 +200,7 @@ export const defaultProducts: Product[] = [
     inStock: true,
     image: "",
     popularity: 56,
+    stock: 10,
   },
 
   {
@@ -207,5 +218,6 @@ export const defaultProducts: Product[] = [
     inStock: true,
     image: "",
     popularity: 3,
+    stock: 10,
   },
 ];

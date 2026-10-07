@@ -22,12 +22,14 @@ export type Product = {
   price: number;
   description: LocalizedProductText;
   category: ProductCategory;
+
   inStock: boolean;
+  stock: number;
+
   image: string;
-  // Firebase Storage
   imageStoragePath?: string;
-  // Cloudinary fallback
   imagePublicId?: string;
+
   popularity: number;
 };
 
