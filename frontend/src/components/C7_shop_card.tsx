@@ -179,7 +179,7 @@ const c7_card_info_bot = css({
   marginTop: "auto",
   gap: "16px",
 
-  "@media (max-width: 480px)": {
+  "@media (max-width: 600px)": {
     flexDirection: "column",
     alignItems: "stretch",
     gap: "10px",

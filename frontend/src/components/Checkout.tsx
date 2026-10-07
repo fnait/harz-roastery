@@ -1,7 +1,9 @@
-import { useState, type FormEvent } from "react";
-import { css } from "@emotion/css";
+import { useEffect, useState, type FormEvent } from "react";
+import { css, cx } from "@emotion/css";
 
 import { createOrder } from "../services/orderApi";
+
+import close_icon from "../assets/close_icon.svg";
 
 import type { OrderCustomer, OrderItem } from "../data/orders";
 
@@ -31,20 +33,26 @@ const overlay = css({
 
   boxSizing: "border-box",
 
-  padding: "24px",
+  padding: "20px",
 
-  backgroundColor: "rgba(0, 0, 0, 0.65)",
+  backgroundColor: "rgba(0, 0, 0, 0.6)",
+
+  "@media (max-width: 700px)": {
+    alignItems: "flex-start",
+    overflowY: "auto",
+    padding: "12px",
+  },
 });
 
 const checkout_card = css({
   overflowY: "auto",
 
   width: "100%",
-  maxWidth: "560px",
-  maxHeight: "90vh",
+  maxWidth: "720px",
+  maxHeight: "calc(100vh - 40px)",
   boxSizing: "border-box",
 
-  padding: "32px",
+  padding: "28px",
 
   backgroundColor: "var(--bg-card)",
   border: "1px solid var(--sand-line)",
@@ -52,23 +60,41 @@ const checkout_card = css({
 
   color: "var(--text-main)",
 
-  "@media (max-width: 600px)": {
-    padding: "24px 18px",
+  "@media (max-width: 700px)": {
+    maxHeight: "none",
+    padding: "20px",
+    borderRadius: "18px",
   },
 });
 
 const header = css({
   display: "flex",
+  alignItems: "flex-start",
   justifyContent: "space-between",
-  alignItems: "center",
 
-  marginBottom: "28px",
-  gap: "16px",
+  marginBottom: "24px",
+  gap: "20px",
 
   "& h2": {
     margin: 0,
+
     fontSize: "26px",
     fontWeight: "800",
+    lineHeight: "125%",
+  },
+
+  "& p": {
+    margin: "8px 0 0",
+
+    color: "var(--text-muted)",
+    fontSize: "14px",
+    lineHeight: "150%",
+  },
+
+  "@media (max-width: 480px)": {
+    "& h2": {
+      fontSize: "22px",
+    },
   },
 });
 
@@ -78,8 +104,8 @@ const close_button = css({
   alignItems: "center",
   justifyContent: "center",
 
-  width: "38px",
-  height: "38px",
+  width: "34px",
+  height: "34px",
 
   padding: 0,
 
@@ -87,27 +113,52 @@ const close_button = css({
   border: "none",
   borderRadius: "50%",
 
-  color: "var(--text-main)",
-  fontSize: "22px",
-  lineHeight: 1,
-
   cursor: "pointer",
+
+  "& img": {
+    width: "15px",
+    height: "15px",
+  },
 });
 
 const form = css({
   display: "flex",
   flexDirection: "column",
-  gap: "18px",
+  gap: "24px",
+});
+
+const section = css({
+  display: "flex",
+  flexDirection: "column",
+  gap: "14px",
+
+  "& h3": {
+    margin: 0,
+
+    fontSize: "15px",
+    fontWeight: "800",
+  },
+});
+
+const fields_grid = css({
+  display: "grid",
+  gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+  gap: "14px",
+
+  "@media (max-width: 600px)": {
+    gridTemplateColumns: "1fr",
+  },
 });
 
 const field = css({
   display: "flex",
   flexDirection: "column",
-  gap: "8px",
+  gap: "7px",
 
   "& label": {
-    fontSize: "13px",
-    fontWeight: "600",
+    color: "var(--text-muted)",
+    fontSize: "12px",
+    fontWeight: "700",
   },
 
   "& input, & textarea": {
@@ -122,9 +173,14 @@ const field = css({
 
     color: "var(--text-main)",
     font: "inherit",
+    fontSize: "14px",
 
     outline: "none",
-    transition: "border-color 0.15s ease",
+    transition: "border-color 0.15s ease, background-color 0.15s ease",
+
+    "&:hover": {
+      borderColor: "var(--text-muted)",
+    },
 
     "&:focus": {
       borderColor: "var(--clay)",
@@ -134,6 +190,14 @@ const field = css({
   "& textarea": {
     minHeight: "90px",
     resize: "vertical",
+  },
+});
+
+const full_width = css({
+  gridColumn: "1 / -1",
+
+  "@media (max-width: 600px)": {
+    gridColumn: "auto",
   },
 });
 
@@ -147,51 +211,101 @@ const summary = css({
 
 const summary_row = css({
   display: "flex",
-  justifyContent: "space-between",
   alignItems: "flex-start",
+  justifyContent: "space-between",
 
-  marginBottom: "8px",
+  padding: "10px 0",
   gap: "16px",
 
+  color: "var(--text-main)",
   fontSize: "14px",
 
-  "&:last-child": {
-    marginBottom: 0,
+  "&:first-child": {
+    paddingTop: 0,
   },
+
+  "&:last-of-type": {
+    paddingBottom: 0,
+  },
+});
+
+const item_name = css({
+  display: "flex",
+  flexDirection: "column",
+  gap: "3px",
+});
+
+const item_details = css({
+  color: "var(--text-muted)",
+  fontSize: "12px",
 });
 
 const total_row = css({
   display: "flex",
+  alignItems: "center",
   justifyContent: "space-between",
 
-  marginTop: "16px",
+  marginTop: "14px",
   paddingTop: "16px",
   gap: "16px",
 
   borderTop: "1px solid var(--sand-line)",
 
   fontSize: "18px",
-  fontWeight: "700",
+  fontWeight: "800",
 });
 
-const submit_button = css({
-  width: "100%",
+const footer = css({
+  display: "flex",
+  justifyContent: "flex-end",
+  gap: "10px",
 
-  padding: "14px",
+  "@media (max-width: 480px)": {
+    display: "grid",
+    gridTemplateColumns: "1fr",
 
-  backgroundColor: "var(--clay)",
-  border: "none",
+    "& button": {
+      width: "100%",
+    },
+  },
+});
+
+const base_button = css({
+  padding: "12px 18px",
+
   borderRadius: "100px",
 
-  color: "#f3ede6",
   font: "inherit",
+  fontSize: "14px",
   fontWeight: "700",
 
   cursor: "pointer",
-  transition: "opacity 0.15s ease",
+});
+
+const cancel_button = css({
+  backgroundColor: "transparent",
+  border: "1px solid var(--sand-line)",
+
+  color: "var(--text-main)",
+
+  "&:hover": {
+    backgroundColor: "var(--chip-bg)",
+  },
+});
+
+const submit_button = css({
+  backgroundColor: "var(--clay)",
+  border: "none",
+
+  color: "#f3ede6",
 
   "&:hover": {
     opacity: 0.9,
+  },
+
+  "&:disabled": {
+    opacity: 0.5,
+    cursor: "not-allowed",
   },
 });
 
@@ -206,6 +320,8 @@ function Checkout({
   onClose,
   onOrderComplete,
 }: Props) {
+  const isUk = language === "uk";
+
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [customer, setCustomer] = useState<OrderCustomer>({
@@ -217,13 +333,26 @@ function Checkout({
     comment: "",
   });
 
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow;
+
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, []);
+
   const totalPrice = cartItems.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0,
   );
 
   const changeField = (field: keyof OrderCustomer, value: string) => {
-    setCustomer((current) => ({ ...current, [field]: value }));
+    setCustomer((current) => ({
+      ...current,
+      [field]: value,
+    }));
   };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -245,6 +374,7 @@ function Checkout({
           address: customer.address.trim(),
           comment: customer.comment.trim(),
         },
+
         items: cartItems.map((item) => ({
           productId: item.id,
           quantity: item.quantity,
@@ -259,7 +389,7 @@ function Checkout({
       window.alert(
         error instanceof Error
           ? error.message
-          : language === "uk"
+          : isUk
             ? "Не вдалося оформити замовлення."
             : "Failed to place order.",
       );
@@ -272,7 +402,6 @@ function Checkout({
     <div
       className={overlay}
       onMouseDown={(event) => {
-        event.stopPropagation();
         if (event.target === event.currentTarget) {
           onClose();
         }
@@ -283,114 +412,177 @@ function Checkout({
         onMouseDown={(event) => event.stopPropagation()}
       >
         <div className={header}>
-          <h2>{language === "uk" ? "Оформлення замовлення" : "Checkout"}</h2>
+          <div>
+            <h2>{isUk ? "Оформлення замовлення" : "Checkout"}</h2>
+
+            <p>
+              {isUk
+                ? "Заповніть контактні дані та адресу доставки."
+                : "Enter your contact details and delivery address."}
+            </p>
+          </div>
+
           <button
             type="button"
             className={close_button}
             onClick={onClose}
-            aria-label={language === "uk" ? "Закрити" : "Close"}
+            aria-label={isUk ? "Закрити" : "Close"}
           >
-            ×
+            <img src={close_icon} alt="" />
           </button>
         </div>
+
         <form className={form} onSubmit={handleSubmit}>
-          <div className={field}>
-            <label htmlFor="checkout-name">
-              {language === "uk" ? "Ім'я" : "Name"}
-            </label>
-            <input
-              id="checkout-name"
-              type="text"
-              value={customer.name}
-              onChange={(event) => changeField("name", event.target.value)}
-              required
-            />
-          </div>
-          <div className={field}>
-            <label htmlFor="checkout-phone">
-              {language === "uk" ? "Телефон" : "Phone"}
-            </label>
-            <input
-              id="checkout-phone"
-              type="tel"
-              value={customer.phone}
-              onChange={(event) => changeField("phone", event.target.value)}
-              required
-            />
-          </div>
-          <div className={field}>
-            <label htmlFor="checkout-email">Email</label>
-            <input
-              id="checkout-email"
-              type="email"
-              value={customer.email}
-              onChange={(event) => changeField("email", event.target.value)}
-              required
-            />
-          </div>
-          <div className={field}>
-            <label htmlFor="checkout-city">
-              {language === "uk" ? "Місто" : "City"}
-            </label>
-            <input
-              id="checkout-city"
-              type="text"
-              value={customer.city}
-              onChange={(event) => changeField("city", event.target.value)}
-              required
-            />
-          </div>
-          <div className={field}>
-            <label htmlFor="checkout-address">
-              {language === "uk" ? "Адреса" : "Address"}
-            </label>
-            <input
-              id="checkout-address"
-              type="text"
-              value={customer.address}
-              onChange={(event) => changeField("address", event.target.value)}
-              required
-            />
-          </div>
-          <div className={field}>
-            <label htmlFor="checkout-comment">
-              {language === "uk" ? "Коментар" : "Comment"}
-            </label>
-            <textarea
-              id="checkout-comment"
-              value={customer.comment}
-              onChange={(event) => changeField("comment", event.target.value)}
-            />
-          </div>
-          <div className={summary}>
-            {cartItems.map((item) => (
-              <div key={item.id} className={summary_row}>
-                <span>
-                  {item.name} × {item.quantity}
-                </span>
-                <span>
-                  ₴{(item.price * item.quantity).toLocaleString("en-US")}
-                </span>
+          <section className={section}>
+            <h3>{isUk ? "Контактні дані" : "Contact details"}</h3>
+
+            <div className={fields_grid}>
+              <div className={field}>
+                <label htmlFor="checkout-name">{isUk ? "Ім'я" : "Name"}</label>
+
+                <input
+                  id="checkout-name"
+                  type="text"
+                  value={customer.name}
+                  onChange={(event) => changeField("name", event.target.value)}
+                  required
+                />
               </div>
-            ))}
-            <div className={total_row}>
-              <span>{language === "uk" ? "Разом" : "Total"}</span>
-              <span>₴{totalPrice.toLocaleString("en-US")}</span>
+
+              <div className={field}>
+                <label htmlFor="checkout-email">Email</label>
+
+                <input
+                  id="checkout-email"
+                  type="email"
+                  value={customer.email}
+                  onChange={(event) => changeField("email", event.target.value)}
+                  required
+                />
+              </div>
+
+              <div className={field}>
+                <label htmlFor="checkout-phone">
+                  {isUk ? "Телефон" : "Phone"}
+                </label>
+
+                <input
+                  id="checkout-phone"
+                  type="tel"
+                  value={customer.phone}
+                  onChange={(event) => changeField("phone", event.target.value)}
+                  required
+                />
+              </div>
             </div>
+          </section>
+
+          <section className={section}>
+            <h3>{isUk ? "Доставка" : "Delivery"}</h3>
+
+            <div className={fields_grid}>
+              <div className={field}>
+                <label htmlFor="checkout-city">{isUk ? "Місто" : "City"}</label>
+
+                <input
+                  id="checkout-city"
+                  type="text"
+                  value={customer.city}
+                  onChange={(event) => changeField("city", event.target.value)}
+                  required
+                />
+              </div>
+
+              <div className={field}>
+                <label htmlFor="checkout-address">
+                  {isUk ? "Адреса" : "Address"}
+                </label>
+
+                <input
+                  id="checkout-address"
+                  type="text"
+                  value={customer.address}
+                  onChange={(event) =>
+                    changeField("address", event.target.value)
+                  }
+                  required
+                />
+              </div>
+
+              <div className={cx(field, full_width)}>
+                <label htmlFor="checkout-comment">
+                  {isUk ? "Коментар" : "Comment"}
+                </label>
+
+                <textarea
+                  id="checkout-comment"
+                  placeholder={
+                    isUk
+                      ? "Побажання щодо доставки або замовлення..."
+                      : "Delivery or order preferences..."
+                  }
+                  value={customer.comment}
+                  onChange={(event) =>
+                    changeField("comment", event.target.value)
+                  }
+                />
+              </div>
+            </div>
+          </section>
+
+          <section className={section}>
+            <h3>{isUk ? "Ваше замовлення" : "Order summary"}</h3>
+
+            <div className={summary}>
+              {cartItems.map((item) => (
+                <div key={item.id} className={summary_row}>
+                  <div className={item_name}>
+                    <span>
+                      {item.name} × {item.quantity}
+                    </span>
+
+                    <span className={item_details}>
+                      {item.roast} · {item.weight}
+                    </span>
+                  </div>
+
+                  <span>
+                    ₴{(item.price * item.quantity).toLocaleString("en-US")}
+                  </span>
+                </div>
+              ))}
+
+              <div className={total_row}>
+                <span>{isUk ? "Разом" : "Total"}</span>
+
+                <span>₴{totalPrice.toLocaleString("en-US")}</span>
+              </div>
+            </div>
+          </section>
+
+          <div className={footer}>
+            <button
+              type="button"
+              className={cx(base_button, cancel_button)}
+              onClick={onClose}
+            >
+              {isUk ? "Скасувати" : "Cancel"}
+            </button>
+
+            <button
+              type="submit"
+              className={cx(base_button, submit_button)}
+              disabled={cartItems.length === 0 || isSubmitting}
+            >
+              {isSubmitting
+                ? isUk
+                  ? "Оформлюємо..."
+                  : "Placing order..."
+                : isUk
+                  ? "Підтвердити замовлення"
+                  : "Place order"}
+            </button>
           </div>
-          <button
-            type="submit"
-            className={submit_button}
-            disabled={cartItems.length === 0 || isSubmitting}
-          >
-            {isSubmitting
-              ? language === "uk"
-                ? "Оформлюємо..."
-                : "Placing order..."
-              : language === "uk"
-                ? "Підтвердити замовлення"
-                : "Place order"}
-          </button>
         </form>
       </div>
     </div>

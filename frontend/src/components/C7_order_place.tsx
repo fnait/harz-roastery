@@ -46,14 +46,12 @@ const overlay = css({
 const order_place = css({
   display: "flex",
   flexDirection: "column",
-  overflowY: "auto",
+  overflow: "hidden",
 
   width: "100%",
   maxWidth: "505px",
   height: "100vh",
   boxSizing: "border-box",
-
-  padding: "40px 48px 36px",
 
   backgroundColor: "var(--bg-card, #1c1512)",
   borderLeft: "1px solid var(--sand-line)",
@@ -76,16 +74,20 @@ const order_place = css({
 
   "@media (max-width: 600px)": {
     maxWidth: "100%",
-    padding: "28px 20px",
   },
 });
 
 const order_header = css({
+  flexShrink: 0,
+
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
 
-  marginBottom: "34px",
+  padding: "40px 48px 26px",
+  gap: "16px",
+
+  backgroundColor: "var(--bg-card, #1c1512)",
 
   "& h2": {
     display: "flex",
@@ -97,6 +99,14 @@ const order_header = css({
     lineHeight: 1.1,
     fontWeight: "800",
     letterSpacing: "-0.6px",
+  },
+
+  "@media (max-width: 600px)": {
+    padding: "28px 20px 22px",
+
+    "& h2": {
+      fontSize: "27px",
+    },
   },
 });
 
@@ -145,8 +155,34 @@ const close_button = css({
 });
 
 const order_items = css({
+  flex: 1,
+  minHeight: 0,
+
   display: "flex",
   flexDirection: "column",
+  overflowY: "auto",
+
+  padding: "0 48px 24px",
+
+  scrollbarWidth: "thin",
+  scrollbarColor: "var(--sand-line) transparent",
+
+  "&::-webkit-scrollbar": {
+    width: "6px",
+  },
+
+  "&::-webkit-scrollbar-track": {
+    backgroundColor: "transparent",
+  },
+
+  "&::-webkit-scrollbar-thumb": {
+    backgroundColor: "var(--sand-line)",
+    borderRadius: "100px",
+  },
+
+  "@media (max-width: 600px)": {
+    padding: "0 20px 20px",
+  },
 });
 
 const order_item = css({
@@ -277,9 +313,16 @@ const empty_cart = css({
 });
 
 const order_bottom = css({
-  marginTop: "auto",
-  paddingTop: "34px",
+  flexShrink: 0,
+
+  padding: "26px 48px 28px",
+
+  backgroundColor: "var(--bg-card, #1c1512)",
   borderTop: "1px solid var(--sand-line)",
+
+  "@media (max-width: 600px)": {
+    padding: "22px 20px 24px",
+  },
 });
 
 const subtotal = css({
