@@ -21,7 +21,7 @@ type C6Props = {
 
 const c6_wrapper = css({
   boxSizing: "border-box",
-  padding: "0 80px 120px",
+  padding: "64px 80px",
 
   "@media (max-width: 1024px)": {
     padding: "0 40px 100px",

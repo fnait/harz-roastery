@@ -236,6 +236,7 @@ const c7_pagination = css({
   justifyContent: "center",
 
   marginTop: "16px",
+  padding: "40px 0px 120px 0px",
   gap: "14px",
 
   "& button": {
