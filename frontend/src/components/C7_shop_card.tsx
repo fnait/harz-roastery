@@ -64,6 +64,7 @@ const c7_card_info = css({
   gap: "20px",
 
   backgroundColor: "var(--bg-card)",
+  justifyContent: "space-between",
 
   "@media (max-width: 768px)": {
     padding: "20px",
@@ -264,6 +265,8 @@ function C7_shop_card({ product, onAddToCart, language }: Props) {
           </div>
           <h4 className={product_name}>{product.name}</h4>
           <p className={product_description}>{product.description[language]}</p>
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
           <div className={product_meta}>
             <p className={product_weight}>{product.weight}</p>
             <p className={cx(stock, product.inStock ? in_stock : out_of_stock)}>
@@ -276,23 +279,23 @@ function C7_shop_card({ product, onAddToCart, language }: Props) {
                   : "Out of stock"}
             </p>
           </div>
-        </div>
-        <div className={c7_card_info_bot}>
-          <p className={product_price}>₴{product.price}</p>
-          <button
-            type="button"
-            className={add_button}
-            onClick={onAddToCart}
-            disabled={!product.inStock}
-          >
-            {product.inStock && product.stock > 0
-              ? language === "uk"
-                ? "Додати в кошик"
-                : "Add to cart"
-              : language === "uk"
-                ? "Немає в наявності"
-                : "Out of stock"}
-          </button>
+          <div className={c7_card_info_bot}>
+            <p className={product_price}>₴{product.price}</p>
+            <button
+              type="button"
+              className={add_button}
+              onClick={onAddToCart}
+              disabled={!product.inStock}
+            >
+              {product.inStock && product.stock > 0
+                ? language === "uk"
+                  ? "Додати в кошик"
+                  : "Add to cart"
+                : language === "uk"
+                  ? "Немає в наявності"
+                  : "Out of stock"}
+            </button>
+          </div>
         </div>
       </div>
     </article>
