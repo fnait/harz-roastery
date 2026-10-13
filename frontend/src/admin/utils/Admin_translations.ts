@@ -3,7 +3,7 @@ export type AdminLanguage = "en" | "uk";
 export const adminTranslations = {
   en: {
     login: {
-      title: "HARZ Admin",
+      title: "Admin Panel",
 
       description:
         "Sign in to manage products, courses, course enrollments, orders and custom roasting requests.",
@@ -30,7 +30,7 @@ export const adminTranslations = {
     dashboard: {
       title: "Dashboard",
 
-      description: "Overview of HARZ Roastery.",
+      description: "Overview of ZHAROVNYA Roastery.",
 
       products: "Products",
       orders: "Orders",
@@ -364,7 +364,7 @@ export const adminTranslations = {
 
   uk: {
     login: {
-      title: "HARZ Admin",
+      title: "Admin Panel",
 
       description:
         "Увійдіть, щоб керувати товарами, курсами, заявками на курси, замовленнями та запитами на індивідуальне обсмажування.",
@@ -391,7 +391,7 @@ export const adminTranslations = {
     dashboard: {
       title: "Панель керування",
 
-      description: "Огляд HARZ Roastery.",
+      description: "Огляд ZHAROVNYA Roastery.",
 
       products: "Товари",
       orders: "Замовлення",

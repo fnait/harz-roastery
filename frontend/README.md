@@ -1,18 +1,18 @@
-# HARZ Roastery — Frontend
+# ZHAROVNYA Roastery — Frontend
 
-React + TypeScript + Vite application for the HARZ Roastery website and admin panel.
+React + TypeScript + Vite application for the ZHAROVNYA Roastery website and admin panel.
 
 See the [root README](../README.md) for the full project overview, environment
 variables and security notes.
 
 ## Scripts
 
-| Command           | Description                              |
-| ----------------- | ---------------------------------------- |
-| `npm run dev`     | Start the Vite dev server                |
-| `npm run build`   | Type-check and build for production      |
-| `npm run preview` | Preview the production build locally     |
-| `npm run lint`    | Run Oxlint                               |
+| Command           | Description                          |
+| ----------------- | ------------------------------------ |
+| `npm run dev`     | Start the Vite dev server            |
+| `npm run build`   | Type-check and build for production  |
+| `npm run preview` | Preview the production build locally |
+| `npm run lint`    | Run Oxlint                           |
 
 ## Configuration
 

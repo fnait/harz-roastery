@@ -380,8 +380,8 @@ function Header({
   return (
     <header className={cx("font-onest", header_place)}>
       <div className={logo_place}>
-        <img src={logo_minimal} alt="HARZ Roastery" />
-        <span>HARZ ROASTERY</span>
+        <img src={logo_minimal} alt="ZHAROVNYA Roastery" />
+        <span>ZHAROVNYA ROASTERY</span>
       </div>
       <div className={navigation_wrapper}>
         <nav aria-label="main-navigation">

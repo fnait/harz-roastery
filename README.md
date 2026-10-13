@@ -1,6 +1,6 @@
-# HARZ Roastery
+# ZHAROVNYA Roastery
 
-HARZ Roastery is a full-stack website for a specialty coffee roastery: a bilingual
+ZHAROVNYA Roastery is a full-stack website for a specialty coffee roastery: a bilingual
 (English / Ukrainian) storefront with a coffee shop, a barista and roaster academy,
 custom roasting requests and an admin panel for managing the whole catalogue.
 
@@ -123,26 +123,26 @@ which are ignored by Git.
 
 **Backend** (`backend/.env`, template: `backend/.env.example`)
 
-| Variable                         | Description                                                  |
-| -------------------------------- | ------------------------------------------------------------ |
-| `PORT`                           | API port (default `3001`)                                    |
-| `FRONTEND_URL`                   | Allowed CORS origin (default `http://localhost:5173`)        |
-| `GOOGLE_APPLICATION_CREDENTIALS` | Path to the Firebase Admin service account JSON              |
-| `FIREBASE_STORAGE_BUCKET`        | Firebase Storage bucket for product images                   |
-| `ADMIN_UID`                      | Firebase Auth UID of the user allowed to use the admin API   |
-| `DEEPL_API_KEY`                  | DeepL API key                                                |
-| `IMAGE_STORAGE_PROVIDER`         | Product image storage: `firebase` or `cloudinary`            |
-| `CLOUDINARY_CLOUD_NAME`          | Cloudinary cloud name (only for the `cloudinary` provider)   |
-| `CLOUDINARY_API_KEY`             | Cloudinary API key                                           |
-| `CLOUDINARY_API_SECRET`          | Cloudinary API secret                                        |
-| `TELEGRAM_BOT_TOKEN`             | Telegram bot token for notifications                         |
-| `TELEGRAM_CHAT_ID`               | Telegram chat that receives notifications                    |
+| Variable                         | Description                                                |
+| -------------------------------- | ---------------------------------------------------------- |
+| `PORT`                           | API port (default `3001`)                                  |
+| `FRONTEND_URL`                   | Allowed CORS origin (default `http://localhost:5173`)      |
+| `GOOGLE_APPLICATION_CREDENTIALS` | Path to the Firebase Admin service account JSON            |
+| `FIREBASE_STORAGE_BUCKET`        | Firebase Storage bucket for product images                 |
+| `ADMIN_UID`                      | Firebase Auth UID of the user allowed to use the admin API |
+| `DEEPL_API_KEY`                  | DeepL API key                                              |
+| `IMAGE_STORAGE_PROVIDER`         | Product image storage: `firebase` or `cloudinary`          |
+| `CLOUDINARY_CLOUD_NAME`          | Cloudinary cloud name (only for the `cloudinary` provider) |
+| `CLOUDINARY_API_KEY`             | Cloudinary API key                                         |
+| `CLOUDINARY_API_SECRET`          | Cloudinary API secret                                      |
+| `TELEGRAM_BOT_TOKEN`             | Telegram bot token for notifications                       |
+| `TELEGRAM_CHAT_ID`               | Telegram chat that receives notifications                  |
 
 **Frontend** (`frontend/.env`, template: `frontend/.env.example`)
 
-| Variable       | Description                                                   |
-| -------------- | ------------------------------------------------------------- |
-| `VITE_API_URL` | Backend base URL (optional, default `http://localhost:3001`)  |
+| Variable       | Description                                                  |
+| -------------- | ------------------------------------------------------------ |
+| `VITE_API_URL` | Backend base URL (optional, default `http://localhost:3001`) |
 
 ## API Overview
 

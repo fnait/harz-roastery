@@ -271,7 +271,6 @@ function AdminCourses({ language, courses, setCourses }: Props) {
     try {
       const firestoreCourses = await getCourses();
 
-      // Delete everything currently stored in harz_academy_courses.
       await Promise.all(
         firestoreCourses.map((course) => deleteCourse(course.id)),
       );
