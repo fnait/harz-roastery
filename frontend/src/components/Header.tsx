@@ -14,7 +14,7 @@ import { translations } from "./translations";
 
 import img_cart from "../assets/header/cart.svg";
 import img_menu from "../assets/header/menu.svg";
-import logo_minimal from "../assets/logo_minimal.svg";
+import logo_minimal from "../assets/logo_minimal_alt.png";
 
 // ----------------------------------------------------------------------
 // TYPES

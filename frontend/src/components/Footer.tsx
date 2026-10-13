@@ -2,7 +2,7 @@ import { css, cx } from "@emotion/css";
 
 import { translations } from "./translations";
 
-import logo_minimal from "../assets/logo_minimal.svg";
+import logo_minimal from "../assets/logo_minimal_alt.png";
 
 // ----------------------------------------------------------------------
 // TYPES
