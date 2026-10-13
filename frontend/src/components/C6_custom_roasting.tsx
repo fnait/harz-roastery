@@ -200,7 +200,15 @@ function C6_custom_roasting({ language }: C6Props) {
             </button>
           </div>
           <div className={img_roster}>
-            <img src={photo} alt="Coffee roaster" />
+            <img
+              src={photo}
+              style={{
+                userSelect: "none",
+                WebkitUserSelect: "none",
+                pointerEvents: "none",
+              }}
+              alt="Coffee roaster"
+            />
           </div>
         </div>
       </div>

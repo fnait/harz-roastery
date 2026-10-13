@@ -253,7 +253,15 @@ function Component1({ language }: Component1Props) {
         </div>
       </div>
       <div className={image_circle}>
-        <img src={logo} alt="Logo" />
+        <img
+          src={logo}
+          style={{
+            userSelect: "none",
+            WebkitUserSelect: "none",
+            pointerEvents: "none",
+          }}
+          alt="Logo"
+        />
       </div>
     </div>
   );

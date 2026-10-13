@@ -114,6 +114,10 @@ const c4_card_place = css({
       height: "auto",
       paddingBottom: "16px",
 
+      userSelect: "none",
+      WebkitUserSelect: "none",
+      pointerEvents: "none",
+
       "@media (max-width: 480px)": {
         paddingBottom: "12px",
       },

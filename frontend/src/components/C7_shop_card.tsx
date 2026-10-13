@@ -259,6 +259,11 @@ function C7_shop_card({ product, onAddToCart, language }: Props) {
             event.currentTarget.onerror = null;
             event.currentTarget.src = PLACEHOLDER_IMAGE;
           }}
+          style={{
+            userSelect: "none",
+            WebkitUserSelect: "none",
+            pointerEvents: "none",
+          }}
         />
       </div>
       <div className={c7_card_info}>

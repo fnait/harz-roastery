@@ -141,7 +141,15 @@ function C2_who_we_are({ language }: C2Props) {
   return (
     <div className={cx("font-onest", c2_place)}>
       <div className={c2_left}>
-        <img src={photo} alt="Photo" />
+        <img
+          src={photo}
+          style={{
+            userSelect: "none",
+            WebkitUserSelect: "none",
+            pointerEvents: "none",
+          }}
+          alt="Photo"
+        />
       </div>
       <div className={c2_right}>
         <h2 className={c2_title}>{t.c2.title}</h2>

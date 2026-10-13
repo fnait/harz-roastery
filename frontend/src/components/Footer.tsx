@@ -230,7 +230,15 @@ function Footer({ language }: FooterProps) {
       <div className={footer_top}>
         <div className={footer_t_l}>
           <div>
-            <img src={logo_minimal} alt="logo_minimal" />
+            <img
+              src={logo_minimal}
+              style={{
+                userSelect: "none",
+                WebkitUserSelect: "none",
+                pointerEvents: "none",
+              }}
+              alt="logo_minimal"
+            />
             <h3>ZHAROVNYA</h3>
           </div>
           <p>{t.footer.description}</p>

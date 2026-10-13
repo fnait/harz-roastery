@@ -380,7 +380,15 @@ function Header({
   return (
     <header className={cx("font-onest", header_place)}>
       <div className={logo_place}>
-        <img src={logo_minimal} alt="ZHAROVNYA Roastery" />
+        <img
+          src={logo_minimal}
+          style={{
+            userSelect: "none",
+            WebkitUserSelect: "none",
+            pointerEvents: "none",
+          }}
+          alt="ZHAROVNYA Roastery"
+        />
         <span>ZHAROVNYA ROASTERY</span>
       </div>
       <div className={navigation_wrapper}>
