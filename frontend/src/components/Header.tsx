@@ -340,7 +340,7 @@ function Header({
   clearCart,
   refreshProducts,
 }: HeaderProps) {
-  const [theme, setTheme] = useState<"dark" | "light">("dark");
+  const [theme, setTheme] = useState<"dark" | "light">("dark"); // <-- DEFAULT THEME
   const [menuOpen, setMenuOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);

@@ -32,7 +32,7 @@ type MainSiteProps = {
 };
 
 function MainSite({ products, courses, refreshProducts }: MainSiteProps) {
-  const [language, setLanguage] = useState<"en" | "uk">("en"); // <-----
+  const [language, setLanguage] = useState<"en" | "uk">("en"); // <----- DEFAULT LANGUAGE
   const [cartItems, setCartItems] = useState<OrderItem[]>([]);
 
   const clearCart = () => {
