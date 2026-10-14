@@ -12,9 +12,9 @@ export const translations = {
     },
 
     c1: {
-      text_before_accent: "Coffee,",
-      accent: " chosen ",
-      text_after_accent: "consciously",
+      text_before_accent: "Flavor,",
+      accent: " forged ",
+      text_after_accent: "by fire.",
       additional_text:
         "We source green beans directly from sustainable micro-lots around the globe, bringing them to our Lviv roastery to unlock their purest potential. Crafted with precision, roasted with intent.",
       btm1_shop: "Shop coffee",
@@ -213,9 +213,9 @@ export const translations = {
     },
 
     c1: {
-      text_before_accent: "Кава,",
-      accent: " обрана ",
-      text_after_accent: "свідомо",
+      text_before_accent: "Вогонь,",
+      accent: " формує ",
+      text_after_accent: "смак.",
       additional_text:
         "Ми закуповуємо зелені зерна безпосередньо з екологічно відповідальних мікролотів по всьому світу й доставляємо їх до нашої львівської ростерні, щоб розкрити їхній найчистіший потенціал. Майстерність у кожній деталі, усвідомлений підхід до обсмажування.",
       btm1_shop: "Магазин кави",
@@ -291,7 +291,7 @@ export const translations = {
 
     c5: {
       title: "АКАДЕМІЯ",
-      second_title: "Курси для бариста та ростерів",
+      second_title: "Курси для бариста та з обсмажування кави",
 
       c1_title: "Основи бариста SCA",
       c1_text:
