@@ -133,10 +133,10 @@ const count_badge = css({
 });
 
 const close_button = css({
+  flexShrink: 0,
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  flexShrink: 0,
 
   width: "40px",
   height: "40px",
@@ -379,12 +379,13 @@ const checkout_button = css({
   fontWeight: "700",
 
   cursor: "pointer",
-  transition: "opacity 0.15s ease",
+
+  transition: "background-color 0.15s ease, color 0.15s ease",
 
   "&:hover": {
-    opacity: 0.9,
+    background: "var(--clay-soft)",
+    color: "white",
   },
-
   "&:disabled": {
     opacity: 0.5,
     cursor: "not-allowed",

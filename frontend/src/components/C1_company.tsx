@@ -189,12 +189,19 @@ const primary_button = css({
   border: "none",
   borderRadius: "100px",
 
-  color: "#f3ede6",
+  color: "white",
   font: "inherit",
   fontSize: "14px",
   fontWeight: "600",
 
   cursor: "pointer",
+
+  transition: "background-color 0.15s ease, color 0.15s ease",
+
+  "&:hover": {
+    background: "var(--clay-soft)",
+    color: "white",
+  },
 
   "@media (max-width: 480px)": {
     width: "100%",
@@ -214,6 +221,12 @@ const secondary_button = css({
   fontWeight: "600",
 
   cursor: "pointer",
+  transition: "background-color 0.15s ease, color 0.15s ease",
+
+  "&:hover": {
+    backgroundColor: "var(--text-main)",
+    color: "var(--bg-page)",
+  },
 
   "@media (max-width: 480px)": {
     width: "100%",

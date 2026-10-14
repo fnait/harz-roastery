@@ -76,6 +76,10 @@ const logo_place = css({
 
   gap: "10px",
 
+  textDecoration: "none",
+  color: "inherit",
+  cursor: "pointer",
+
   "& img": {
     height: "28px",
     width: "28px",
@@ -136,6 +140,9 @@ const navigation = css({
     fontWeight: "500",
     textDecoration: "none",
     whiteSpace: "nowrap",
+    "&:hover": {
+      color: "var(--text-main)",
+    },
   },
 
   "@media (max-width: 1100px)": {
@@ -169,12 +176,20 @@ const shop_button = css({
   border: "none",
   borderRadius: "100px",
 
-  color: "#f3ede6",
+  color: "white",
+
   font: "inherit",
   fontSize: "14px",
   fontWeight: "600",
 
   cursor: "pointer",
+
+  transition: "background-color 0.15s ease, color 0.15s ease",
+
+  "&:hover": {
+    background: "var(--clay-soft)",
+    color: "white",
+  },
 
   "@media (max-width: 768px)": {
     padding: "10px 18px",
@@ -379,17 +394,19 @@ function Header({
 
   return (
     <header className={cx("font-onest", header_place)}>
-      <div className={logo_place}>
-        <img
-          src={logo_minimal}
-          style={{
-            userSelect: "none",
-            WebkitUserSelect: "none",
-            pointerEvents: "none",
-          }}
-          alt="ZHAROVNYA Roastery"
-        />
-        <span>ZHAROVNYA ROASTERY</span>
+      <div>
+        <a href="#about" className={logo_place}>
+          <img
+            src={logo_minimal}
+            style={{
+              userSelect: "none",
+              WebkitUserSelect: "none",
+              pointerEvents: "none",
+            }}
+            alt="ZHAROVNYA Roastery"
+          />
+          <span>ZHAROVNYA ROASTERY</span>
+        </a>
       </div>
       <div className={navigation_wrapper}>
         <nav aria-label="main-navigation">

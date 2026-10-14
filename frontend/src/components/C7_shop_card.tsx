@@ -213,7 +213,7 @@ const add_button = css({
   border: "1px solid var(--sand-line)",
   borderRadius: "24px",
 
-  color: "#f3ede6",
+  color: "white",
   font: "inherit",
   fontSize: "14px",
   fontWeight: "600",
@@ -221,10 +221,11 @@ const add_button = css({
   whiteSpace: "nowrap",
 
   cursor: "pointer",
-  transition: "opacity 0.15s ease",
+  transition: "background-color 0.15s ease, color 0.15s ease",
 
   "&:hover": {
-    opacity: 0.9,
+    background: "var(--clay-soft)",
+    color: "white",
   },
 
   "&:disabled": {

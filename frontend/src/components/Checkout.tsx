@@ -105,8 +105,8 @@ const close_button = css({
   alignItems: "center",
   justifyContent: "center",
 
-  width: "34px",
-  height: "34px",
+  width: "40px",
+  height: "40px",
 
   padding: 0,
 
@@ -288,6 +288,7 @@ const cancel_button = css({
   border: "1px solid var(--sand-line)",
 
   color: "var(--text-main)",
+  transition: "background-color 0.15s ease, color 0.15s ease",
 
   "&:hover": {
     backgroundColor: "var(--chip-bg)",
@@ -300,8 +301,11 @@ const submit_button = css({
 
   color: "#f3ede6",
 
+  transition: "background-color 0.15s ease, color 0.15s ease",
+
   "&:hover": {
-    opacity: 0.9,
+    background: "var(--clay-soft)",
+    color: "white",
   },
 
   "&:disabled": {
@@ -531,7 +535,7 @@ function Checkout({
 
           <button
             type="button"
-            className={close_button}
+            className={cx(close_button, "icon")}
             onClick={onClose}
             aria-label={isUk ? "Закрити" : "Close"}
           >
