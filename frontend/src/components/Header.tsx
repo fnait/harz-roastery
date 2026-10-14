@@ -457,11 +457,10 @@ function Header({
           {menuOpen && (
             <div className={dropdown_menu}>
               <button type="button" onClick={toggleTheme}>
-                {t.nav.theme}:{" "}
-                {theme === "dark" ? t.nav.theme_dark : t.nav.theme_light}
+                Theme: {theme === "dark" ? t.nav.theme_dark : t.nav.theme_light}
               </button>
               <button type="button" onClick={toggleLanguage}>
-                {t.nav.language}: {language === "en" ? "English" : "Українська"}
+                Language: {language === "en" ? "English" : "Українська"}
               </button>
             </div>
           )}
