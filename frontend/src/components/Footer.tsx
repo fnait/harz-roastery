@@ -247,12 +247,11 @@ function Footer({ language }: FooterProps) {
           <div>
             <h4>{t.footer.roastery_title}</h4>
             <p>{t.footer.address}</p>
-            {/* <p>{t.footer.working_hours}</p> */}
           </div>
           <div>
             <h4>{t.footer.contact_title}</h4>
             <h5>{t.footer.email}</h5>
-            {/* <p>{t.footer.working_hours}</p> */}
+            <h5 style={{ marginTop: "7px" }}>+380991332757</h5>
           </div>
         </div>
       </div>

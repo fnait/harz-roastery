@@ -726,11 +726,11 @@ function AdminDashboard({
   // ----------------------------------------------------------------------
 
   const toggleTheme = () => {
-    setTheme((current) => (current === "dark" ? "light" : "dark"));
+    setTheme((current) => (current === "dark" ? "light" : "dark")); // <----- DEFAULT THEME
   };
 
   const toggleLanguage = () => {
-    setLanguage((current) => (current === "uk" ? "en" : "uk")); // <-----
+    setLanguage((current) => (current === "uk" ? "en" : "uk")); // <----- DEFAULT LANGUAGE
   };
 
   // ----------------------------------------------------------------------

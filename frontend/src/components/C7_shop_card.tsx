@@ -243,6 +243,18 @@ const add_button = css({
   },
 });
 
+const getProductImage = (image?: string) => {
+  if (!image) {
+    return PLACEHOLDER_IMAGE;
+  }
+
+  if (image.startsWith("file://") || /^[A-Za-z]:\\/.test(image)) {
+    return PLACEHOLDER_IMAGE;
+  }
+
+  return image;
+};
+
 // ----------------------------------------------------------------------
 // COMPONENT
 // ----------------------------------------------------------------------
@@ -254,7 +266,7 @@ function C7_shop_card({ product, onAddToCart, language }: Props) {
     <article className={c7_card}>
       <div className={c7_card_image}>
         <img
-          src={product.image || PLACEHOLDER_IMAGE}
+          src={getProductImage(product.image)}
           alt={product.name}
           onError={(event) => {
             event.currentTarget.onerror = null;

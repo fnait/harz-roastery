@@ -74,3 +74,6 @@ desktop.ini
 *.old
 *.orig
 *.rej
+
+# Firebase local cache
+.firebase/
