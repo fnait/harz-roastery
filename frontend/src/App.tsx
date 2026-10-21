@@ -11,6 +11,7 @@ import C6_custom_roasting from "./components/C6_custom_roasting";
 import C7_shop from "./components/C7_shop";
 import Footer from "./components/Footer";
 import AdminPanel from "./admin/AdminPanel";
+import Reveal from "./components/Reveal";
 
 import { getCourses } from "./services/courseApi";
 import { getProducts } from "./services/productApi";
@@ -145,12 +146,35 @@ function MainSite({ products, courses, refreshProducts }: MainSiteProps) {
         refreshProducts={refreshProducts}
       />
       <Component1 language={language} />
-      <C2_who_we_are language={language} />
-      <C3_roast_profiles language={language} />
-      <C4_who_this_is_for language={language} />
-      <C5_academy language={language} courses={courses} />
-      <C6_custom_roasting language={language} />
-      <C7_shop language={language} products={products} addToCart={addToCart} />
+
+      <Reveal>
+        <C2_who_we_are language={language} />
+      </Reveal>
+
+      <Reveal>
+        <C3_roast_profiles language={language} />
+      </Reveal>
+
+      <Reveal>
+        <C4_who_this_is_for language={language} />
+      </Reveal>
+
+      <Reveal>
+        <C5_academy language={language} courses={courses} />
+      </Reveal>
+
+      <Reveal>
+        <C6_custom_roasting language={language} />
+      </Reveal>
+
+      <Reveal>
+        <C7_shop
+          language={language}
+          products={products}
+          addToCart={addToCart}
+        />
+      </Reveal>
+
       <Footer language={language} />
     </>
   );
