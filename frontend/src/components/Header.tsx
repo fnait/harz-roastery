@@ -9,7 +9,7 @@ import { css, cx } from "@emotion/css";
 
 import C7_order_place from "./C7_order_place";
 
-import type { OrderItem } from "../data/orders";
+import type { CartItem } from "../data/orders";
 import { translations } from "./translations";
 
 import img_cart from "../assets/header/cart.svg";
@@ -23,7 +23,7 @@ import logo_minimal from "../assets/logo_minimal_alt.png";
 type HeaderProps = {
   language: "en" | "uk";
   setLanguage: Dispatch<SetStateAction<"en" | "uk">>;
-  cartItems: OrderItem[];
+  cartItems: CartItem[];
   increaseQuantity: (id: number) => void;
   decreaseQuantity: (id: number) => void;
   removeFromCart: (id: number) => void;

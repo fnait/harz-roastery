@@ -18,7 +18,7 @@ import { getProducts } from "./services/productApi";
 import type { CourseEnrollment } from "./data/courseEnrollments";
 import type { Course } from "./data/courses";
 import type { CustomRoastingRequest } from "./data/customRoasting";
-import type { Order, OrderItem } from "./data/orders";
+import type { CartItem, Order } from "./data/orders";
 import type { CartProduct } from "./data/products";
 
 // ----------------------------------------------------------------------
@@ -44,14 +44,18 @@ type MainSiteProps = {
 
 function MainSite({ products, courses, refreshProducts }: MainSiteProps) {
   const [language, setLanguage] = useState<"en" | "uk">(getInitialLanguage);
-  const [cartItems, setCartItems] = useState<OrderItem[]>([]);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
   const clearCart = () => {
     setCartItems([]);
   };
 
   const addToCart = (product: CartProduct) => {
-    if (!product.inStock || product.stock <= 0) {
+    // Missing or invalid stock (e.g. older products) is treated as 0.
+    const stock =
+      Number.isFinite(product.stock) && product.stock > 0 ? product.stock : 0;
+
+    if (!product.inStock || stock === 0) {
       return;
     }
 
@@ -59,7 +63,7 @@ function MainSite({ products, courses, refreshProducts }: MainSiteProps) {
       const existingItem = currentItems.find((item) => item.id === product.id);
 
       if (existingItem) {
-        if (existingItem.quantity >= product.stock) {
+        if (existingItem.quantity >= stock) {
           return currentItems;
         }
 
@@ -67,7 +71,7 @@ function MainSite({ products, courses, refreshProducts }: MainSiteProps) {
           item.id === product.id
             ? {
                 ...item,
-                stock: product.stock,
+                stock,
                 quantity: item.quantity + 1,
               }
             : item,
@@ -83,7 +87,7 @@ function MainSite({ products, courses, refreshProducts }: MainSiteProps) {
           weight: product.weight,
           price: product.price,
           image: product.image,
-          stock: product.stock,
+          stock,
           quantity: 1,
         },
       ];

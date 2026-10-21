@@ -5,6 +5,7 @@ export type OrderStatus =
   | "completed"
   | "cancelled";
 
+// Product snapshot saved in an order (matches the backend order item).
 export type OrderItem = {
   id: number;
   name: string;
@@ -13,8 +14,11 @@ export type OrderItem = {
   price: number;
   image: string;
   quantity: number;
-  stock: number;
 };
+
+// Shopping cart item: an order item plus the current product stock,
+// used only to limit the quantity in the cart.
+export type CartItem = OrderItem & { stock: number };
 
 export type OrderCustomer = {
   name: string;

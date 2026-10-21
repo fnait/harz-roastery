@@ -126,7 +126,6 @@ which are ignored by Git.
 | Variable                         | Description                                                |
 | -------------------------------- | ---------------------------------------------------------- |
 | `PORT`                           | API port (default `3001`)                                  |
-| `FRONTEND_URL`                   | Allowed CORS origin (default `http://localhost:5173`)      |
 | `GOOGLE_APPLICATION_CREDENTIALS` | Path to the Firebase Admin service account JSON            |
 | `FIREBASE_STORAGE_BUCKET`        | Firebase Storage bucket for product images                 |
 | `ADMIN_UID`                      | Firebase Auth UID of the user allowed to use the admin API |
@@ -171,6 +170,8 @@ Firestore collections: `harz_products`, `harz_academy_courses`, `harz_orders`,
   whose UID matches `ADMIN_UID`.
 - DeepL, Cloudinary and Telegram credentials are used only by the backend; the frontend never
   receives them.
+- CORS is limited to the origins listed in `allowedOrigins` in `backend/src/index.ts`
+  (local development and the Firebase Hosting domains).
 
 ## Build
 

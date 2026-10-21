@@ -56,6 +56,14 @@ function createOrderId(): number {
   return Date.now() * 1000 + Math.floor(Math.random() * 1000);
 }
 
+// Older product documents may not have a stock field yet; treat it as 0
+// so the order is rejected instead of writing NaN to Firestore.
+function getCurrentStock(product: Product): number {
+  return typeof product.stock === "number" && Number.isFinite(product.stock)
+    ? product.stock
+    : 0;
+}
+
 // ----------------------------------------------------------------------
 // GET
 // ----------------------------------------------------------------------
@@ -128,13 +136,15 @@ export async function createOrder(input: CreateOrderInput): Promise<Order> {
         throw new Error(`Product with id ${productId} was not found.`);
       }
 
-      if (!product.inStock || product.stock <= 0) {
+      const currentStock = getCurrentStock(product);
+
+      if (!product.inStock || currentStock <= 0) {
         throw new Error(`${product.name} is out of stock.`);
       }
 
-      if (requestedQuantity > product.stock) {
+      if (requestedQuantity > currentStock) {
         throw new Error(
-          `Only ${product.stock} item(s) of ${product.name} are available.`,
+          `Only ${currentStock} item(s) of ${product.name} are available.`,
         );
       }
 
@@ -175,7 +185,7 @@ export async function createOrder(input: CreateOrderInput): Promise<Order> {
         .collection(PRODUCTS_COLLECTION)
         .doc(String(productId));
 
-      const newStock = product.stock - requestedQuantity;
+      const newStock = getCurrentStock(product) - requestedQuantity;
 
       transaction.update(productRef, {
         stock: newStock,

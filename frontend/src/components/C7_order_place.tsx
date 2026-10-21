@@ -3,7 +3,7 @@ import { css, cx } from "@emotion/css";
 
 import Checkout from "./Checkout";
 
-import type { OrderItem } from "../data/orders";
+import type { CartItem } from "../data/orders";
 import { translations } from "./translations";
 
 import close_icon from "../assets/close_icon.svg";
@@ -15,7 +15,7 @@ import close_icon from "../assets/close_icon.svg";
 type Props = {
   language: "en" | "uk";
   onClose: () => void;
-  cartItems: OrderItem[];
+  cartItems: CartItem[];
   increaseQuantity: (id: number) => void;
   decreaseQuantity: (id: number) => void;
   removeFromCart: (id: number) => void;
@@ -451,7 +451,7 @@ function C7_order_place({
     };
   }, [onClose]);
 
-  const handleDecrease = (item: OrderItem) => {
+  const handleDecrease = (item: CartItem) => {
     if (item.quantity === 1) {
       removeFromCart(item.id);
       return;

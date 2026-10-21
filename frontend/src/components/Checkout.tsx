@@ -3,7 +3,7 @@ import { css, cx } from "@emotion/css";
 
 import { createOrder } from "../services/orderApi";
 
-import type { OrderCustomer, OrderItem } from "../data/orders";
+import type { CartItem, OrderCustomer } from "../data/orders";
 
 import close_icon from "../assets/close_icon.svg";
 
@@ -13,7 +13,7 @@ import close_icon from "../assets/close_icon.svg";
 
 type Props = {
   language: "en" | "uk";
-  cartItems: OrderItem[];
+  cartItems: CartItem[];
   clearCart: () => void;
   onClose: () => void;
   onOrderComplete: () => void | Promise<void>;

@@ -260,6 +260,10 @@ const getProductImage = (image?: string) => {
 // ----------------------------------------------------------------------
 
 function C7_shop_card({ product, onAddToCart, language }: Props) {
+  // Missing, invalid or non-positive stock means the product is unavailable.
+  const isAvailable =
+    product.inStock && Number.isFinite(product.stock) && product.stock > 0;
+
   return (
     <article className={c7_card}>
       <div className={c7_card_image}>
@@ -267,8 +271,12 @@ function C7_shop_card({ product, onAddToCart, language }: Props) {
           src={getProductImage(product.image)}
           alt={product.name}
           onError={(event) => {
-            event.currentTarget.onerror = null;
-            event.currentTarget.src = PLACEHOLDER_IMAGE;
+            const image = event.currentTarget;
+
+            // Fall back once; skip if the placeholder itself failed to load.
+            if (!image.src.endsWith(PLACEHOLDER_IMAGE)) {
+              image.src = PLACEHOLDER_IMAGE;
+            }
           }}
           style={{
             userSelect: "none",
@@ -292,8 +300,8 @@ function C7_shop_card({ product, onAddToCart, language }: Props) {
         <div style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
           <div className={product_meta}>
             <p className={product_weight}>{product.weight}</p>
-            <p className={cx(stock, product.inStock ? in_stock : out_of_stock)}>
-              {product.inStock && product.stock > 0
+            <p className={cx(stock, isAvailable ? in_stock : out_of_stock)}>
+              {isAvailable
                 ? language === "uk"
                   ? "В наявності"
                   : "In stock"
@@ -308,9 +316,9 @@ function C7_shop_card({ product, onAddToCart, language }: Props) {
               type="button"
               className={add_button}
               onClick={onAddToCart}
-              disabled={!product.inStock}
+              disabled={!isAvailable}
             >
-              {product.inStock && product.stock > 0
+              {isAvailable
                 ? language === "uk"
                   ? "Додати в кошик"
                   : "Add to cart"
