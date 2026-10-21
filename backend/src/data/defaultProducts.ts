@@ -97,7 +97,7 @@ export const defaultProducts: Product[] = [
 
   {
     id: 6,
-    name: "ZHAROVNYA Espresso Blend",
+    name: "HARZ Espresso Blend",
     roast: "Dark Roast",
     roastColor: "#7A4A2E",
     weight: "250g",

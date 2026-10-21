@@ -2,7 +2,7 @@ import { css, cx } from "@emotion/css";
 
 import { translations } from "./translations";
 
-import logo from "../assets/Logo.png";
+import logo from "../assets/harz_Logo.svg";
 
 // ----------------------------------------------------------------------
 // TYPES

@@ -61,20 +61,20 @@ const c5_title = css({
   },
 });
 
-// const c5_second_title = css({
-//   fontSize: "36px",
-//   fontFamily: "inherit",
-//   fontWeight: "700",
-//   lineHeight: "120%",
+const c5_second_title = css({
+  fontSize: "36px",
+  fontFamily: "inherit",
+  fontWeight: "700",
+  lineHeight: "120%",
 
-//   "@media (max-width: 768px)": {
-//     fontSize: "32px",
-//   },
+  "@media (max-width: 768px)": {
+    fontSize: "32px",
+  },
 
-//   "@media (max-width: 480px)": {
-//     fontSize: "28px",
-//   },
-// });
+  "@media (max-width: 480px)": {
+    fontSize: "28px",
+  },
+});
 
 const c5_card_place = css({
   display: "grid",
@@ -245,6 +245,7 @@ function C5_academy({ language, courses }: C5Props) {
     <div id="courses" className={cx(c5_place, "font-onest")}>
       <div>
         <h2 className={c5_title}>{t.c5.title}</h2>
+        <h3 className={c5_second_title}>{t.c5.second_title}</h3>
       </div>
       {activeCourses.length === 0 ? (
         <div className={empty_state}>

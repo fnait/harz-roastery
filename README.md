@@ -1,6 +1,6 @@
-# ZHAROVNYA Roastery
+# HARZ Roastery
 
-ZHAROVNYA Roastery is a full-stack website for a specialty coffee roastery: a bilingual
+HARZ Roastery is a full-stack website for a specialty coffee roastery: a bilingual
 (English / Ukrainian) storefront with a coffee shop, a barista and roaster academy,
 custom roasting requests and an admin panel for managing the whole catalogue.
 

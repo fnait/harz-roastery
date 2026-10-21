@@ -38,5 +38,5 @@ app.use("/api/course-enrollments", courseEnrollmentRouter);
 app.use("/api/custom-roasting", customRoastingRouter);
 
 app.listen(PORT, () => {
-  console.log(`ZHAROVNYA backend running on http://localhost:${PORT}`);
+  console.log(`HARZ backend running on http://localhost:${PORT}`);
 });

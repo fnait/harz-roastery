@@ -16,7 +16,7 @@ type Props = {
 // CONSTANTS
 // ----------------------------------------------------------------------
 
-const PLACEHOLDER_IMAGE = "/images/coffee-placeholder.webp";
+const PLACEHOLDER_IMAGE = "/images/harz_coffee-placeholder3.webp";
 
 // ----------------------------------------------------------------------
 // STYLES

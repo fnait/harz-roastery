@@ -14,7 +14,7 @@ import { translations } from "./translations";
 
 import img_cart from "../assets/header/cart.svg";
 import img_menu from "../assets/header/menu.svg";
-import logo_minimal from "../assets/logo_minimal_alt.png";
+import logo_minimal from "../assets/harz_logo_minimal.svg";
 
 // ----------------------------------------------------------------------
 // TYPES
@@ -404,9 +404,9 @@ function Header({
               WebkitUserSelect: "none",
               pointerEvents: "none",
             }}
-            alt="ZHAROVNYA Roastery"
+            alt="HARZ Roastery"
           />
-          <span>ZHAROVNYA ROASTERY</span>
+          <span>HARZ ROASTERY</span>
         </a>
       </div>
       <div className={navigation_wrapper}>

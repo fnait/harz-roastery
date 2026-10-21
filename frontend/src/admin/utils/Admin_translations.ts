@@ -30,7 +30,7 @@ export const adminTranslations = {
     dashboard: {
       title: "Dashboard",
 
-      description: "Overview of ZHAROVNYA Roastery.",
+      description: "Overview of HARZ Roastery.",
 
       products: "Products",
       orders: "Orders",
@@ -391,7 +391,7 @@ export const adminTranslations = {
     dashboard: {
       title: "Панель керування",
 
-      description: "Огляд ZHAROVNYA Roastery.",
+      description: "Огляд HARZ Roastery.",
 
       products: "Товари",
       orders: "Замовлення",

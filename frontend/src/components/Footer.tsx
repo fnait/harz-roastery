@@ -2,7 +2,7 @@ import { css, cx } from "@emotion/css";
 
 import { translations } from "./translations";
 
-import logo_minimal from "../assets/logo_minimal_alt.png";
+import logo_minimal from "../assets/harz_logo_minimal.svg";
 
 // ----------------------------------------------------------------------
 // TYPES
@@ -239,7 +239,7 @@ function Footer({ language }: FooterProps) {
               }}
               alt="logo_minimal"
             />
-            <h3>ZHAROVNYA</h3>
+            <h3>HARZ</h3>
           </div>
           <p>{t.footer.description}</p>
         </div>
@@ -251,7 +251,7 @@ function Footer({ language }: FooterProps) {
           <div>
             <h4>{t.footer.contact_title}</h4>
             <h5>{t.footer.email}</h5>
-            <h5 style={{ marginTop: "7px" }}>+380991332757</h5>
+            <h5 style={{ marginTop: "7px" }}>+00000000000</h5>
           </div>
         </div>
       </div>
