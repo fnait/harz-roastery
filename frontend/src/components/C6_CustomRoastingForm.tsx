@@ -312,7 +312,6 @@ const success_title = css({
   margin: "0 0 10px",
 
   color: "var(--text-main)",
-
   fontSize: "26px",
   fontWeight: "800",
 });
@@ -323,7 +322,6 @@ const success_text = css({
   margin: "0 0 28px",
 
   color: "var(--text-muted)",
-
   fontSize: "14px",
   lineHeight: "160%",
 });
@@ -338,7 +336,6 @@ const success_button = css({
   borderRadius: "100px",
 
   color: "#f3ede6",
-
   font: "inherit",
   fontSize: "14px",
   fontWeight: "700",
@@ -622,17 +619,14 @@ function C6_CustomRoastingForm({ language, onClose }: Props) {
         >
           <div className={success_content}>
             <div className={success_icon}>✓</div>
-
             <h2 className={success_title}>
               {isUk ? "Дякуємо за заявку!" : "Thank you for your request!"}
             </h2>
-
             <p className={success_text}>
               {isUk
                 ? "Ми отримали вашу заявку на індивідуальне обсмажування. Ми зв’яжемося з вами найближчим часом, щоб уточнити деталі."
                 : "We have received your custom roasting request. We will contact you shortly to confirm the details."}
             </p>
-
             <button type="button" className={success_button} onClick={onClose}>
               {isUk ? "Готово" : "Done"}
             </button>
@@ -777,7 +771,6 @@ function C6_CustomRoastingForm({ language, onClose }: Props) {
                 <label htmlFor="custom-roast-level">
                   {isUk ? "Обсмажування" : "Roast level"}
                 </label>
-
                 <CustomSelect
                   id="custom-roast-level"
                   value={formData.roast}
@@ -800,10 +793,7 @@ function C6_CustomRoastingForm({ language, onClose }: Props) {
                     },
                   ]}
                   onChange={(value) =>
-                    setFormData((current) => ({
-                      ...current,
-                      roast: value,
-                    }))
+                    setFormData((current) => ({ ...current, roast: value }))
                   }
                 />
               </div>
@@ -811,7 +801,6 @@ function C6_CustomRoastingForm({ language, onClose }: Props) {
                 <label htmlFor="custom-roast-purpose">
                   {isUk ? "Для чого" : "Purpose"}
                 </label>
-
                 <CustomSelect
                   id="custom-roast-purpose"
                   value={formData.purpose}
@@ -834,10 +823,7 @@ function C6_CustomRoastingForm({ language, onClose }: Props) {
                     },
                   ]}
                   onChange={(value) =>
-                    setFormData((current) => ({
-                      ...current,
-                      purpose: value,
-                    }))
+                    setFormData((current) => ({ ...current, purpose: value }))
                   }
                 />
               </div>

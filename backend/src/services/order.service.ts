@@ -179,7 +179,6 @@ export async function createOrder(input: CreateOrderInput): Promise<Order> {
 
       transaction.update(productRef, {
         stock: newStock,
-
         // Если продали последнюю единицу,
         // товар автоматически становится недоступным.
         inStock: newStock > 0,

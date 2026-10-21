@@ -80,7 +80,6 @@ const order_place = css({
 
 const order_header = css({
   flexShrink: 0,
-
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
@@ -157,11 +156,11 @@ const close_button = css({
 
 const order_items = css({
   flex: 1,
-  minHeight: 0,
-
   display: "flex",
   flexDirection: "column",
   overflowY: "auto",
+
+  minHeight: 0,
 
   padding: "0 48px 24px",
 
@@ -379,13 +378,13 @@ const checkout_button = css({
   fontWeight: "700",
 
   cursor: "pointer",
-
   transition: "background-color 0.15s ease, color 0.15s ease",
 
   "&:hover": {
     background: "var(--clay-soft)",
     color: "white",
   },
+
   "&:disabled": {
     opacity: 0.5,
     cursor: "not-allowed",
@@ -573,9 +572,7 @@ function C7_order_place({
           cartItems={cartItems}
           clearCart={clearCart}
           onClose={() => setCheckoutOpen(false)}
-          onOrderComplete={async () => {
-            await refreshProducts();
-          }}
+          onOrderComplete={refreshProducts}
           onSuccessClose={() => {
             setCheckoutOpen(false);
             onClose();

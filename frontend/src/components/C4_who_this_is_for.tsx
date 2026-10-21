@@ -112,6 +112,7 @@ const c4_card_place = css({
     "& img": {
       maxWidth: "100%",
       height: "auto",
+
       paddingBottom: "16px",
 
       userSelect: "none",

@@ -426,7 +426,6 @@ const success_title = css({
   margin: "0 0 10px",
 
   color: "var(--text-main)",
-
   fontSize: "26px",
   fontWeight: "800",
 });
@@ -437,7 +436,6 @@ const success_text = css({
   margin: "0 0 28px",
 
   color: "var(--text-muted)",
-
   fontSize: "14px",
   lineHeight: "160%",
 });
@@ -452,7 +450,6 @@ const success_button = css({
   borderRadius: "100px",
 
   color: "#f3ede6",
-
   font: "inherit",
   fontSize: "14px",
   fontWeight: "700",
@@ -543,19 +540,16 @@ function C5_academy_card({
         >
           <div className={success_content}>
             <div className={success_icon}>✓</div>
-
             <h2 className={success_title}>
               {language === "uk"
                 ? "Дякуємо за реєстрацію!"
                 : "Thank you for registering!"}
             </h2>
-
             <p className={success_text}>
               {language === "uk"
                 ? "Ми отримали вашу заявку на курс. Ми зв’яжемося з вами найближчим часом, щоб підтвердити участь та уточнити деталі."
                 : "We have received your course registration. We will contact you shortly to confirm your participation and provide further details."}
             </p>
-
             <button type="button" className={success_button} onClick={onClose}>
               {language === "uk" ? "Готово" : "Done"}
             </button>

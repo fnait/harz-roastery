@@ -15,17 +15,14 @@ dotenv.config();
 const app = express();
 
 const PORT = Number(process.env.PORT) || 3001;
+
 const allowedOrigins = [
   "http://localhost:5173",
   "https://zharovnya-roastery.web.app",
   "https://zharovnya-roastery.firebaseapp.com",
 ];
 
-app.use(
-  cors({
-    origin: allowedOrigins,
-  }),
-);
+app.use(cors({ origin: allowedOrigins }));
 app.use(express.json({ limit: "10mb" }));
 
 app.get("/api/health", (_request: Request, response: Response) => {

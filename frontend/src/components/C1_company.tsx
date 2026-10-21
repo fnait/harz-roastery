@@ -195,7 +195,6 @@ const primary_button = css({
   fontWeight: "600",
 
   cursor: "pointer",
-
   transition: "background-color 0.15s ease, color 0.15s ease",
 
   "&:hover": {

@@ -140,17 +140,16 @@ export async function editProduct(request: Request, response: Response) {
 // RESET
 // ----------------------------------------------------------------------
 
-export async function resetAllProducts(_request: Request, response: Response) {
+export async function resetAllProducts(
+  _request: Request,
+  response: Response,
+) {
   try {
     const products = await resetProducts();
-
     response.json(products);
   } catch (error) {
     console.error("Reset products error:", error);
-
-    response.status(500).json({
-      message: "Failed to reset products.",
-    });
+    response.status(500).json({ message: "Failed to reset products." });
   }
 }
 

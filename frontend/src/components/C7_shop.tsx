@@ -43,8 +43,8 @@ const c7_place = css({
 
   "@media (max-width: 768px)": {
     padding: "80px 24px",
-    scrollMarginTop: "20px",
     gap: "32px",
+    scrollMarginTop: "20px",
   },
 
   "@media (max-width: 480px)": {

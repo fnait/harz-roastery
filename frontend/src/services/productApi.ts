@@ -94,19 +94,11 @@ export async function deleteProduct(id: number): Promise<void> {
 }
 
 export async function resetProducts(): Promise<CartProduct[]> {
-  const user = auth.currentUser;
-
-  if (!user) {
-    throw new Error("Authentication required.");
-  }
-
-  const token = await user.getIdToken();
+  const token = await getAdminToken();
 
   const response = await fetch(`${API_URL}/api/products/reset`, {
     method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+    headers: { Authorization: `Bearer ${token}` },
   });
 
   if (!response.ok) {

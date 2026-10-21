@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { css } from "@emotion/css";
-import close_icon from "../../assets/close_icon.svg";
 
 import ImageEditorModal from "../utils/ImageEditorModal";
 import AProd_CustomSelect, { type SelectOption } from "./AProd_CustomSelect";
@@ -13,6 +12,8 @@ import {
   adminTranslations,
   type AdminLanguage,
 } from "../utils/Admin_translations";
+
+import close_icon from "../../assets/close_icon.svg";
 
 // ----------------------------------------------------------------------
 // TYPES
@@ -119,21 +120,19 @@ const overlay = css({
 const modal = css({
   display: "flex",
   flexDirection: "column",
+  overflow: "hidden",
 
   width: "100%",
   maxWidth: "720px",
   maxHeight: "calc(100vh - 40px)",
   boxSizing: "border-box",
 
-  overflow: "hidden",
-
   backgroundColor: "var(--bg-card)",
   border: "1px solid var(--sand-line)",
   borderRadius: "24px",
+  boxShadow: "0 24px 80px rgba(0, 0, 0, 0.35)",
 
   color: "var(--text-main)",
-
-  boxShadow: "0 24px 80px rgba(0, 0, 0, 0.35)",
 
   "@media (max-width: 700px)": {
     maxHeight: "calc(100vh - 24px)",
@@ -163,7 +162,6 @@ const modal_header = css({
     margin: "7px 0 0",
 
     color: "var(--text-muted)",
-
     fontSize: "13px",
     lineHeight: "150%",
   },
@@ -179,7 +177,6 @@ const modal_header = css({
 
 const close_button = css({
   flexShrink: 0,
-
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
@@ -207,7 +204,6 @@ const close_button = css({
 
 const modal_body = css({
   overflowY: "auto",
-
   padding: "24px 28px 28px",
 
   "@media (max-width: 600px)": {
@@ -219,9 +215,8 @@ const form_section = css({
   display: "flex",
   flexDirection: "column",
 
-  gap: "16px",
-
   padding: "20px",
+  gap: "16px",
 
   backgroundColor: "var(--chip-bg)",
   border: "1px solid var(--sand-line)",
@@ -232,7 +227,6 @@ const section_title = css({
   margin: 0,
 
   color: "var(--text-main)",
-
   fontSize: "14px",
   fontWeight: "800",
 });
@@ -240,7 +234,6 @@ const section_title = css({
 const fields_grid = css({
   display: "grid",
   gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
-
   gap: "16px",
 
   "@media (max-width: 620px)": {
@@ -259,19 +252,16 @@ const full_width = css({
 const form = css({
   display: "flex",
   flexDirection: "column",
-
   gap: "20px",
 });
 
 const field = css({
   display: "flex",
   flexDirection: "column",
-
   gap: "7px",
 
   "& > label": {
     color: "var(--text-muted)",
-
     fontSize: "12px",
     fontWeight: "700",
   },
@@ -287,12 +277,10 @@ const field = css({
     borderRadius: "12px",
 
     color: "var(--text-main)",
-
     font: "inherit",
     fontSize: "14px",
 
     outline: "none",
-
     transition: "border-color 0.15s ease",
 
     "&:hover": {
@@ -388,13 +376,11 @@ const form_buttons = css({
   position: "sticky",
   bottom: "-28px",
   zIndex: 10,
-
   display: "flex",
   justifyContent: "flex-end",
 
   margin: "4px -28px -28px",
   padding: "18px 28px",
-
   gap: "10px",
 
   backgroundColor: "var(--bg-card)",
@@ -402,7 +388,6 @@ const form_buttons = css({
 
   "@media (max-width: 600px)": {
     bottom: "-20px",
-
     margin: "4px -20px -20px",
     padding: "16px 20px",
   },
@@ -455,13 +440,11 @@ const translate_button = css({
   borderRadius: "100px",
 
   color: "var(--text-main)",
-
   font: "inherit",
   fontSize: "13px",
   fontWeight: "600",
 
   cursor: "pointer",
-
   transition: "border-color 0.15s ease, opacity 0.15s ease",
 
   "&:hover:not(:disabled)": {
@@ -491,7 +474,6 @@ const availability_box = css({
 const image_section_content = css({
   display: "flex",
   alignItems: "flex-start",
-
   gap: "20px",
 
   "@media (max-width: 520px)": {
@@ -692,7 +674,6 @@ function AProd_Modal({ language, product, onClose, onSave }: Props) {
           <div className={modal_header}>
             <div>
               <h2>{product ? t.editTitle : t.addTitle}</h2>
-
               <p>
                 {language === "uk"
                   ? product
@@ -703,7 +684,6 @@ function AProd_Modal({ language, product, onClose, onSave }: Props) {
                     : "Add a new product to the shop catalogue."}
               </p>
             </div>
-
             <button
               type="button"
               className={close_button}
@@ -713,38 +693,32 @@ function AProd_Modal({ language, product, onClose, onSave }: Props) {
               <img src={close_icon} alt="" />
             </button>
           </div>
-
           {/* SCROLLABLE BODY */}
           <div className={modal_body}>
             <form className={form} onSubmit={handleSubmit}>
               {/* ---------------------------------------------------------- */}
               {/* IMAGE */}
               {/* ---------------------------------------------------------- */}
-
               <section className={form_section}>
                 <h3 className={section_title}>
                   {language === "uk" ? "Зображення товару" : "Product image"}
                 </h3>
-
                 <div className={image_section_content}>
                   {formData.image && (
                     <div className={image_preview}>
                       <img src={formData.image} alt={t.imagePreview} />
                     </div>
                   )}
-
                   <div className={image_upload}>
                     <div className={image_actions}>
                       <label>
                         {formData.image ? t.changeImage : t.uploadImage}
-
                         <input
                           type="file"
                           accept="image/png,image/jpeg,image/webp"
                           onChange={handleImageSelect}
                         />
                       </label>
-
                       {formData.image && (
                         <>
                           <button
@@ -753,7 +727,6 @@ function AProd_Modal({ language, product, onClose, onSave }: Props) {
                           >
                             {t.editImage}
                           </button>
-
                           <button
                             type="button"
                             className={remove_image_button}
@@ -771,7 +744,6 @@ function AProd_Modal({ language, product, onClose, onSave }: Props) {
                         </>
                       )}
                     </div>
-
                     {!formData.image && (
                       <p
                         style={{
@@ -789,22 +761,18 @@ function AProd_Modal({ language, product, onClose, onSave }: Props) {
                   </div>
                 </div>
               </section>
-
               {/* ---------------------------------------------------------- */}
               {/* BASIC INFORMATION */}
               {/* ---------------------------------------------------------- */}
-
               <section className={form_section}>
                 <h3 className={section_title}>
                   {language === "uk"
                     ? "Основна інформація"
                     : "Basic information"}
                 </h3>
-
                 <div className={fields_grid}>
                   <div className={`${field} ${full_width}`}>
                     <label htmlFor="product-name">{t.name}</label>
-
                     <input
                       id="product-name"
                       type="text"
@@ -818,14 +786,12 @@ function AProd_Modal({ language, product, onClose, onSave }: Props) {
                       required
                     />
                   </div>
-
                   <div className={field}>
                     <label htmlFor="product-description-uk">
                       {language === "uk"
                         ? "Опис — українською"
                         : "Description — Ukrainian"}
                     </label>
-
                     <textarea
                       id="product-description-uk"
                       rows={5}
@@ -838,14 +804,12 @@ function AProd_Modal({ language, product, onClose, onSave }: Props) {
                       }
                     />
                   </div>
-
                   <div className={field}>
                     <label htmlFor="product-description-en">
                       {language === "uk"
                         ? "Опис — англійською"
                         : "Description — English"}
                     </label>
-
                     <textarea
                       id="product-description-en"
                       rows={5}
@@ -857,7 +821,6 @@ function AProd_Modal({ language, product, onClose, onSave }: Props) {
                         }))
                       }
                     />
-
                     <button
                       type="button"
                       className={translate_button}
@@ -875,62 +838,46 @@ function AProd_Modal({ language, product, onClose, onSave }: Props) {
                   </div>
                 </div>
               </section>
-
               {/* ---------------------------------------------------------- */}
               {/* PRODUCT SETTINGS */}
               {/* ---------------------------------------------------------- */}
-
               <section className={form_section}>
                 <h3 className={section_title}>
                   {language === "uk"
                     ? "Налаштування товару"
                     : "Product settings"}
                 </h3>
-
                 <div className={fields_grid}>
                   <div className={field}>
                     <label>{t.category}</label>
-
                     <AProd_CustomSelect
                       value={formData.category}
                       options={categoryOptions}
                       onChange={(category) =>
-                        setFormData((current) => ({
-                          ...current,
-                          category,
-                        }))
+                        setFormData((current) => ({ ...current, category }))
                       }
                     />
                   </div>
-
                   <div className={field}>
                     <label>{t.roast}</label>
-
                     <AProd_CustomSelect
                       value={formData.roast}
                       options={roastOptions}
                       onChange={handleRoastChange}
                     />
                   </div>
-
                   <div className={field}>
                     <label>{t.weight}</label>
-
                     <AProd_CustomSelect
                       value={formData.weight}
                       options={weightOptions}
                       onChange={(weight) =>
-                        setFormData((current) => ({
-                          ...current,
-                          weight,
-                        }))
+                        setFormData((current) => ({ ...current, weight }))
                       }
                     />
                   </div>
-
                   <div className={field}>
                     <label htmlFor="product-price">{t.price}</label>
-
                     <input
                       id="product-price"
                       type="number"
@@ -946,14 +893,12 @@ function AProd_Modal({ language, product, onClose, onSave }: Props) {
                       required
                     />
                   </div>
-
                   <div className={field}>
                     <label htmlFor="product-stock-quantity">
                       {language === "uk"
                         ? "Кількість на складі"
                         : "Stock quantity"}
                     </label>
-
                     <input
                       id="product-stock-quantity"
                       type="number"
@@ -969,10 +914,8 @@ function AProd_Modal({ language, product, onClose, onSave }: Props) {
                       required
                     />
                   </div>
-
                   <div className={field}>
                     <label>{t.availability}</label>
-
                     <div className={availability_box}>
                       <div className={checkbox_field}>
                         <input
@@ -986,18 +929,15 @@ function AProd_Modal({ language, product, onClose, onSave }: Props) {
                             }))
                           }
                         />
-
                         <label htmlFor="product-stock">{t.inStock}</label>
                       </div>
                     </div>
                   </div>
                 </div>
               </section>
-
               {/* ---------------------------------------------------------- */}
               {/* ACTIONS */}
               {/* ---------------------------------------------------------- */}
-
               <div className={form_buttons}>
                 <button
                   type="button"
@@ -1006,7 +946,6 @@ function AProd_Modal({ language, product, onClose, onSave }: Props) {
                 >
                   {t.cancel}
                 </button>
-
                 <button
                   type="submit"
                   className={save_button}
@@ -1019,7 +958,6 @@ function AProd_Modal({ language, product, onClose, onSave }: Props) {
           </div>
         </div>
       </div>
-
       {imageEditorSrc && (
         <ImageEditorModal
           language={language}

@@ -3,9 +3,9 @@ import { css, cx } from "@emotion/css";
 
 import { createOrder } from "../services/orderApi";
 
-import close_icon from "../assets/close_icon.svg";
-
 import type { OrderCustomer, OrderItem } from "../data/orders";
+
+import close_icon from "../assets/close_icon.svg";
 
 // ----------------------------------------------------------------------
 // TYPES
@@ -135,7 +135,6 @@ const section = css({
 
   "& h3": {
     margin: 0,
-
     fontSize: "15px",
     fontWeight: "800",
   },
@@ -288,6 +287,7 @@ const cancel_button = css({
   border: "1px solid var(--sand-line)",
 
   color: "var(--text-main)",
+
   transition: "background-color 0.15s ease, color 0.15s ease",
 
   "&:hover": {
@@ -346,7 +346,6 @@ const success_title = css({
   margin: "0 0 10px",
 
   color: "var(--text-main)",
-
   fontSize: "26px",
   fontWeight: "800",
 });
@@ -357,7 +356,6 @@ const success_text = css({
   margin: "0 0 28px",
 
   color: "var(--text-muted)",
-
   fontSize: "14px",
   lineHeight: "160%",
 });
@@ -372,7 +370,6 @@ const success_button = css({
   borderRadius: "100px",
 
   color: "#f3ede6",
-
   font: "inherit",
   fontSize: "14px",
   fontWeight: "700",
@@ -417,10 +414,7 @@ function Checkout({
   );
 
   const changeField = (field: keyof OrderCustomer, value: string) => {
-    setCustomer((current) => ({
-      ...current,
-      [field]: value,
-    }));
+    setCustomer((current) => ({ ...current, [field]: value }));
   };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -442,7 +436,6 @@ function Checkout({
           address: customer.address.trim(),
           comment: customer.comment.trim(),
         },
-
         items: cartItems.map((item) => ({
           productId: item.id,
           quantity: item.quantity,
@@ -483,25 +476,22 @@ function Checkout({
         >
           <div className={success_content}>
             <div className={success_icon}>✓</div>
-
             <h2 className={success_title}>
-              {language === "uk"
+              {isUk
                 ? "Дякуємо за замовлення!"
                 : "Thank you for your order!"}
             </h2>
-
             <p className={success_text}>
-              {language === "uk"
+              {isUk
                 ? "Ваше замовлення прийнято. Ми зв’яжемося з вами найближчим часом, щоб уточнити деталі."
                 : "Your order has been received. We will contact you shortly to confirm the details."}
             </p>
-
             <button
               type="button"
               className={success_button}
               onClick={onSuccessClose}
             >
-              {language === "uk" ? "Готово" : "Done"}
+              {isUk ? "Готово" : "Done"}
             </button>
           </div>
         </div>
@@ -525,14 +515,12 @@ function Checkout({
         <div className={header}>
           <div>
             <h2>{isUk ? "Оформлення замовлення" : "Checkout"}</h2>
-
             <p>
               {isUk
                 ? "Заповніть контактні дані та адресу доставки."
                 : "Enter your contact details and delivery address."}
             </p>
           </div>
-
           <button
             type="button"
             className={cx(close_button, "icon")}
@@ -542,15 +530,12 @@ function Checkout({
             <img src={close_icon} alt="" />
           </button>
         </div>
-
         <form className={form} onSubmit={handleSubmit}>
           <section className={section}>
             <h3>{isUk ? "Контактні дані" : "Contact details"}</h3>
-
             <div className={fields_grid}>
               <div className={field}>
                 <label htmlFor="checkout-name">{isUk ? "Ім'я" : "Name"}</label>
-
                 <input
                   id="checkout-name"
                   type="text"
@@ -559,10 +544,8 @@ function Checkout({
                   required
                 />
               </div>
-
               <div className={field}>
                 <label htmlFor="checkout-email">Email</label>
-
                 <input
                   id="checkout-email"
                   type="email"
@@ -571,12 +554,10 @@ function Checkout({
                   required
                 />
               </div>
-
               <div className={field}>
                 <label htmlFor="checkout-phone">
                   {isUk ? "Телефон" : "Phone"}
                 </label>
-
                 <input
                   id="checkout-phone"
                   type="tel"
@@ -587,14 +568,11 @@ function Checkout({
               </div>
             </div>
           </section>
-
           <section className={section}>
             <h3>{isUk ? "Доставка" : "Delivery"}</h3>
-
             <div className={fields_grid}>
               <div className={field}>
                 <label htmlFor="checkout-city">{isUk ? "Місто" : "City"}</label>
-
                 <input
                   id="checkout-city"
                   type="text"
@@ -603,12 +581,10 @@ function Checkout({
                   required
                 />
               </div>
-
               <div className={field}>
                 <label htmlFor="checkout-address">
                   {isUk ? "Адреса" : "Address"}
                 </label>
-
                 <input
                   id="checkout-address"
                   type="text"
@@ -619,12 +595,10 @@ function Checkout({
                   required
                 />
               </div>
-
               <div className={cx(field, full_width)}>
                 <label htmlFor="checkout-comment">
                   {isUk ? "Коментар" : "Comment"}
                 </label>
-
                 <textarea
                   id="checkout-comment"
                   placeholder={
@@ -640,10 +614,8 @@ function Checkout({
               </div>
             </div>
           </section>
-
           <section className={section}>
             <h3>{isUk ? "Ваше замовлення" : "Order summary"}</h3>
-
             <div className={summary}>
               {cartItems.map((item) => (
                 <div key={item.id} className={summary_row}>
@@ -651,26 +623,21 @@ function Checkout({
                     <span>
                       {item.name} × {item.quantity}
                     </span>
-
                     <span className={item_details}>
                       {item.roast} · {item.weight}
                     </span>
                   </div>
-
                   <span>
                     ₴{(item.price * item.quantity).toLocaleString("en-US")}
                   </span>
                 </div>
               ))}
-
               <div className={total_row}>
                 <span>{isUk ? "Разом" : "Total"}</span>
-
                 <span>₴{totalPrice.toLocaleString("en-US")}</span>
               </div>
             </div>
           </section>
-
           <div className={footer}>
             <button
               type="button"
@@ -679,7 +646,6 @@ function Checkout({
             >
               {isUk ? "Скасувати" : "Cancel"}
             </button>
-
             <button
               type="submit"
               className={cx(base_button, submit_button)}

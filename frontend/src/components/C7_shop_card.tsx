@@ -1,7 +1,6 @@
 import { css, cx } from "@emotion/css";
 
 import type { CartProduct } from "../data/products";
-// import { translations } from "./translations";
 
 // ----------------------------------------------------------------------
 // TYPES
@@ -59,12 +58,12 @@ const c7_card_info = css({
   display: "flex",
   flexDirection: "column",
   flex: 1,
+  justifyContent: "space-between",
 
   padding: "24px",
   gap: "20px",
 
   backgroundColor: "var(--bg-card)",
-  justifyContent: "space-between",
 
   "@media (max-width: 768px)": {
     padding: "20px",
@@ -184,12 +183,13 @@ const c7_card_info_bot = css({
     flexDirection: "column",
     alignItems: "stretch",
     alignContent: "flex-end",
+
     gap: "10px",
 
     "& > p": {
       width: "100%",
-      textAlign: "left",
       margin: 0,
+      textAlign: "left",
     },
   },
 });
@@ -260,8 +260,6 @@ const getProductImage = (image?: string) => {
 // ----------------------------------------------------------------------
 
 function C7_shop_card({ product, onAddToCart, language }: Props) {
-  // const t = translations[language];
-
   return (
     <article className={c7_card}>
       <div className={c7_card_image}>

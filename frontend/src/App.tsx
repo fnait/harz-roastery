@@ -21,6 +21,11 @@ import type { CustomRoastingRequest } from "./data/customRoasting";
 import type { Order, OrderItem } from "./data/orders";
 import type { CartProduct } from "./data/products";
 
+// ----------------------------------------------------------------------
+// MAIN SITE
+// ----------------------------------------------------------------------
+
+// Ukrainian for Ukrainian / Russian browser languages, English otherwise.
 const getInitialLanguage = (): "uk" | "en" => {
   const language = navigator.language.toLowerCase();
 
@@ -31,10 +36,6 @@ const getInitialLanguage = (): "uk" | "en" => {
   return "en";
 };
 
-// ----------------------------------------------------------------------
-// MAIN SITE
-// ----------------------------------------------------------------------
-
 type MainSiteProps = {
   products: CartProduct[];
   courses: Course[];
@@ -42,7 +43,6 @@ type MainSiteProps = {
 };
 
 function MainSite({ products, courses, refreshProducts }: MainSiteProps) {
-  // const [language, setLanguage] = useState<"en" | "uk">("uk"); // <----- DEFAULT LANGUAGE
   const [language, setLanguage] = useState<"en" | "uk">(getInitialLanguage);
   const [cartItems, setCartItems] = useState<OrderItem[]>([]);
 
@@ -101,10 +101,7 @@ function MainSite({ products, courses, refreshProducts }: MainSiteProps) {
           return item;
         }
 
-        return {
-          ...item,
-          quantity: item.quantity + 1,
-        };
+        return { ...item, quantity: item.quantity + 1 };
       }),
     );
   };

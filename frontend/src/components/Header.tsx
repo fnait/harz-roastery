@@ -78,6 +78,7 @@ const logo_place = css({
 
   textDecoration: "none",
   color: "inherit",
+
   cursor: "pointer",
 
   "& img": {
@@ -140,6 +141,7 @@ const navigation = css({
     fontWeight: "500",
     textDecoration: "none",
     whiteSpace: "nowrap",
+
     "&:hover": {
       color: "var(--text-main)",
     },
@@ -177,13 +179,11 @@ const shop_button = css({
   borderRadius: "100px",
 
   color: "white",
-
   font: "inherit",
   fontSize: "14px",
   fontWeight: "600",
 
   cursor: "pointer",
-
   transition: "background-color 0.15s ease, color 0.15s ease",
 
   "&:hover": {
@@ -355,7 +355,8 @@ function Header({
   clearCart,
   refreshProducts,
 }: HeaderProps) {
-  const [theme, setTheme] = useState<"dark" | "light">("dark"); // <-- DEFAULT THEME
+  // Default theme: dark. The light theme is enabled from the menu.
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
   const [menuOpen, setMenuOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);

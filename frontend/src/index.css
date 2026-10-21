@@ -1,4 +1,7 @@
+/* Dark theme is the default; the light theme is enabled only from the menu. */
 :root {
+  color-scheme: dark;
+
   --bg-page: #120d0b;
   --bg-card: #1c1512;
   --bg-card-deep: #2a1216;
@@ -16,27 +19,9 @@
   --hero-circle-end: #25060c;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    --bg-page: #f3ede6;
-    --bg-card: #ffffff;
-    --bg-card-deep: #ede0d5;
-
-    --text-main: #15110c;
-    --text-muted: #6b6459;
-
-    --clay: #c4243f;
-    --clay-soft: #a31d34;
-
-    --sand-line: rgba(21, 17, 12, 0.12);
-    --chip-bg: rgba(21, 17, 12, 0.06);
-
-    --hero-circle-start: #c4243f;
-    --hero-circle-end: #c4243f;
-  }
-}
-
 :root[data-theme="light"] {
+  color-scheme: light;
+
   --bg-page: #f3ede6;
   --bg-card: #ffffff;
   --bg-card-deep: #ede0d5;
@@ -55,6 +40,8 @@
 }
 
 :root[data-theme="dark"] {
+  color-scheme: dark;
+
   --bg-page: #120d0b;
   --bg-card: #1c1512;
   --bg-card-deep: #2a1216;
