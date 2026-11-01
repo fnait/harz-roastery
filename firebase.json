@@ -1,20 +1,40 @@
 {
-  "hosting": {
-    "site": "harz-roastery",
-    "public": "frontend/dist",
-    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
-    "rewrites": [
-      {
-        "source": "/api/**",
-        "function": {
-          "functionId": "api",
-          "region": "europe-west1"
+  "hosting": [
+    {
+      "site": "harz-roastery",
+      "public": "frontend/dist",
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "rewrites": [
+        {
+          "source": "/api/**",
+          "function": {
+            "functionId": "api",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "**",
+          "destination": "/index.html"
         }
-      },
-      {
-        "source": "**",
-        "destination": "/index.html"
-      }
-    ]
-  }
+      ]
+    },
+    {
+      "site": "harz-rostery",
+      "public": "frontend/dist",
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "rewrites": [
+        {
+          "source": "/api/**",
+          "function": {
+            "functionId": "api",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    }
+  ]
 }
