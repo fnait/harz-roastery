@@ -108,6 +108,7 @@ export const adminTranslations = {
         espresso: "Espresso",
         rare: "Rare",
         decaf: "Decaf",
+        drip: "Drip-Coffee",
       },
 
       roastLevels: {
@@ -470,6 +471,7 @@ export const adminTranslations = {
         espresso: "Еспресо",
         rare: "Рідкісна кава",
         decaf: "Без кофеїну",
+        drip: "Дріп-кава",
       },
 
       roastLevels: {

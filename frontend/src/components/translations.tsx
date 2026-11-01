@@ -74,9 +74,9 @@ export const translations = {
       c3_text:
         "Advance your technical craft, sensory analysis, and perfect the science of espresso extraction.",
 
-      c4_title: "Roasters",
+      c4_title: "New to the World of Coffee",
       c4_text:
-        "Gain hands-on experience controlling thermal dynamics and mastering roasting software profiles.",
+        "Learn more about coffee beans, roasting, and brewing methods so you can choose and prepare coffee with greater confidence.",
 
       c5_title: "Coffee enthusiasts",
       c5_text:
@@ -141,8 +141,9 @@ export const translations = {
       filter_all: "All Coffee",
       filter_single_origin: "Single Origin",
       filter_espresso: "Espresso Blends",
-      filter_rare: "Geisha & Rare",
+      filter_rare: "Rare",
       filter_decaf: "Decaf",
+      filter_drip: "Drip-Coffee",
 
       sort_by: "Sort by",
       sort_popularity: "Popularity",
@@ -276,9 +277,9 @@ export const translations = {
       c3_text:
         "Розвивайте технічні навички, сенсорний аналіз і вдосконалюйте науку екстракції еспресо.",
 
-      c4_title: "Ростери",
+      c4_title: "Новачки у світі кави",
       c4_text:
-        "Отримуйте практичний досвід контролю термічної динаміки та опановуйте профілі обсмажування в спеціалізованому програмному забезпеченні.",
+        "Дізнайтеся більше про зерно, обсмажування та способи заварювання, щоб упевненіше обирати й готувати каву.",
 
       c5_title: "Поціновувачі кави",
       c5_text:
@@ -343,8 +344,9 @@ export const translations = {
       filter_all: "Уся кава",
       filter_single_origin: "Моносорти",
       filter_espresso: "Еспресо-суміші",
-      filter_rare: "Гейша та рідкісні сорти",
+      filter_rare: "Рідкісні сорти",
       filter_decaf: "Без кофеїну",
+      filter_drip: "Дріп-кава",
 
       sort_by: "Сортувати",
       sort_popularity: "За популярністю",

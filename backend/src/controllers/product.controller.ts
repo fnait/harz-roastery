@@ -20,6 +20,7 @@ const PRODUCT_CATEGORIES: ProductCategory[] = [
   "espresso",
   "rare",
   "decaf",
+  "drip",
 ];
 
 function isProductCategory(value: unknown): value is ProductCategory {

@@ -15,7 +15,7 @@ export type CartProduct = {
   weight: string;
   price: number;
   description: LocalizedProductText;
-  category: "single-origin" | "espresso" | "rare" | "decaf";
+  category: "single-origin" | "espresso" | "rare" | "decaf" | "drip";
   inStock: boolean;
   stock: number;
   image: string;
