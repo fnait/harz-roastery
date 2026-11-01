@@ -1,6 +1,10 @@
 {
   "hosting": [
     {
+      "_comment": "firebase deploy --only hosting:harz-roastery,hosting:harz-rostery",
+      "port": 5432
+    },
+    {
       "site": "harz-roastery",
       "public": "frontend/dist",
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
