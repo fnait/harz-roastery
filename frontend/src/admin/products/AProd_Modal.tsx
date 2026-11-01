@@ -52,6 +52,7 @@ type ProductForm = {
 // ----------------------------------------------------------------------
 
 const weightOptions: SelectOption<string>[] = [
+  { value: "10g", label: "10g" },
   { value: "250g", label: "250g" },
   { value: "500g", label: "500g" },
   { value: "1kg", label: "1kg" },
@@ -493,6 +494,7 @@ function AProd_Modal({ language, product, onClose, onSave }: Props) {
     { value: "espresso", label: t.categories.espresso },
     { value: "rare", label: t.categories.rare },
     { value: "decaf", label: t.categories.decaf },
+    { value: "drip", label: t.categories.drip },
   ];
 
   const roastOptions: SelectOption<string>[] = [

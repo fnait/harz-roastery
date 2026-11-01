@@ -15,7 +15,7 @@ export type CartProduct = {
   weight: string;
   price: number;
   description: LocalizedProductText;
-  category: "single-origin" | "espresso" | "rare" | "decaf";
+  category: "single-origin" | "espresso" | "rare" | "decaf" | "drip";
   inStock: boolean;
   stock: number;
   image: string;
@@ -245,5 +245,221 @@ export const initialProducts: CartProduct[] = [
     image: "",
     popularity: 3,
     stock: 10,
+  },
+
+  {
+    id: 13,
+    name: "Colombia Decaf",
+    roast: "Medium Roast",
+    roastColor: "#C96A4B",
+    weight: "250g",
+    price: 480,
+    description: {
+      en: "Swiss Water decaf with milk chocolate and caramel sweetness.",
+      uk: "Кава без кофеїну (Swiss Water) з нотами молочного шоколаду та карамелі.",
+    },
+    category: "decaf",
+    inStock: true,
+    image: "",
+    popularity: 8,
+    stock: 10,
+  },
+
+  {
+    id: 14,
+    name: "Ethiopia Drip Bag",
+    roast: "Light Roast",
+    roastColor: "#D9A96E",
+    weight: "10g",
+    price: 45,
+    description: {
+      en: "Single-cup drip bag with floral and citrus notes. Just add hot water.",
+      uk: "Дріп-пакет на одну чашку з квітковими та цитрусовими нотами. Просто залийте гарячою водою.",
+    },
+    category: "drip",
+    inStock: true,
+    image: "",
+    popularity: 11,
+    stock: 10,
+  },
+
+  {
+    id: 15,
+    name: "Kenya Nyeri Drip Bag",
+    roast: "Light Roast",
+    roastColor: "#D9A96E",
+    weight: "10g",
+    price: 50,
+    description: {
+      en: "Blackcurrant and grapefruit acidity in a single-cup drip bag.",
+      uk: "Чорна смородина та грейпфрутова кислотність у дріп-пакеті на одну чашку.",
+    },
+    category: "drip",
+    inStock: true,
+    image: "",
+    popularity: 14,
+    stock: 30,
+  },
+
+  {
+    id: 16,
+    name: "Colombia Huila Drip Bag",
+    roast: "Medium Roast",
+    roastColor: "#C96A4B",
+    weight: "10g",
+    price: 45,
+    description: {
+      en: "Caramel, red apple and milk chocolate in a convenient drip bag.",
+      uk: "Карамель, червоне яблуко та молочний шоколад у зручному дріп-пакеті.",
+    },
+    category: "drip",
+    inStock: true,
+    image: "",
+    popularity: 12,
+    stock: 30,
+  },
+
+  {
+    id: 17,
+    name: "Lviv Espresso Blend",
+    roast: "Dark Roast",
+    roastColor: "#7A4A2E",
+    weight: "1kg",
+    price: 1450,
+    description: {
+      en: "Dark chocolate, roasted hazelnut and a long sweet finish. Made for milk drinks.",
+      uk: "Темний шоколад, обсмажений фундук і довгий солодкий післясмак. Створений для напоїв з молоком.",
+    },
+    category: "espresso",
+    inStock: true,
+    image: "",
+    popularity: 31,
+    stock: 8,
+  },
+
+  {
+    id: 18,
+    name: "Crema Espresso Blend",
+    roast: "Medium Roast",
+    roastColor: "#C96A4B",
+    weight: "500g",
+    price: 760,
+    description: {
+      en: "Balanced blend with cocoa, dried fruit and a thick crema.",
+      uk: "Збалансована суміш із нотами какао, сухофруктів і щільною кремою.",
+    },
+    category: "espresso",
+    inStock: true,
+    image: "",
+    popularity: 18,
+    stock: 12,
+  },
+
+  {
+    id: 19,
+    name: "Ethiopia Gesha Village",
+    roast: "Light Roast",
+    roastColor: "#D9A96E",
+    weight: "250g",
+    price: 1250,
+    description: {
+      en: "Bergamot, jasmine and white peach. A rare micro-lot from the birthplace of Gesha.",
+      uk: "Бергамот, жасмин і білий персик. Рідкісний мікролот з батьківщини сорту Гейша.",
+    },
+    category: "rare",
+    inStock: true,
+    image: "",
+    popularity: 15,
+    stock: 4,
+  },
+
+  {
+    id: 20,
+    name: "Colombia Pink Bourbon",
+    roast: "Light Roast",
+    roastColor: "#D9A96E",
+    weight: "250g",
+    price: 890,
+    description: {
+      en: "Raspberry, hibiscus and cane sugar with a juicy, sparkling acidity.",
+      uk: "Малина, гібіскус і тростинний цукор із соковитою, яскравою кислотністю.",
+    },
+    category: "rare",
+    inStock: true,
+    image: "",
+    popularity: 13,
+    stock: 6,
+  },
+
+  {
+    id: 21,
+    name: "Brazil Decaf",
+    roast: "Dark Roast",
+    roastColor: "#7A4A2E",
+    weight: "500g",
+    price: 780,
+    description: {
+      en: "Sugarcane decaf with hazelnut and cocoa. Full flavour without caffeine.",
+      uk: "Кава без кофеїну (метод цукрової тростини) з нотами фундука та какао.",
+    },
+    category: "decaf",
+    inStock: true,
+    image: "",
+    popularity: 9,
+    stock: 10,
+  },
+
+  {
+    id: 22,
+    name: "Honduras Santa Bárbara",
+    roast: "Medium Roast",
+    roastColor: "#C96A4B",
+    weight: "250g",
+    price: 495,
+    description: {
+      en: "Red apple, toffee and milk chocolate with a round body.",
+      uk: "Червоне яблуко, ірис і молочний шоколад з округлим тілом.",
+    },
+    category: "single-origin",
+    inStock: true,
+    image: "",
+    popularity: 21,
+    stock: 10,
+  },
+
+  {
+    id: 23,
+    name: "El Salvador Pacamara",
+    roast: "Light Roast",
+    roastColor: "#D9A96E",
+    weight: "250g",
+    price: 560,
+    description: {
+      en: "Large-bean variety with notes of plum, cocoa nibs and orange zest.",
+      uk: "Великозерний сорт з нотами сливи, какао-крупки та апельсинової цедри.",
+    },
+    category: "single-origin",
+    inStock: true,
+    image: "",
+    popularity: 17,
+    stock: 10,
+  },
+
+  {
+    id: 24,
+    name: "Yemen Haraz",
+    roast: "Medium Roast",
+    roastColor: "#C96A4B",
+    weight: "250g",
+    price: 1100,
+    description: {
+      en: "Dried fig, spices and dark chocolate from the historic terraces of Yemen.",
+      uk: "Сушений інжир, спеції та темний шоколад з історичних терас Ємену.",
+    },
+    category: "rare",
+    inStock: false,
+    image: "",
+    popularity: 7,
+    stock: 0,
   },
 ];

@@ -11,7 +11,12 @@ export type LocalizedProductText = {
   uk: string;
 };
 
-export type ProductCategory = "single-origin" | "espresso" | "rare" | "decaf";
+export type ProductCategory =
+  | "single-origin"
+  | "espresso"
+  | "rare"
+  | "decaf"
+  | "drip";
 
 export type Product = {
   id: number;

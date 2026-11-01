@@ -141,8 +141,9 @@ export const translations = {
       filter_all: "All Coffee",
       filter_single_origin: "Single Origin",
       filter_espresso: "Espresso Blends",
-      filter_rare: "Geisha & Rare",
+      filter_rare: "Rare",
       filter_decaf: "Decaf",
+      filter_drip: "Drip-Coffee",
 
       sort_by: "Sort by",
       sort_popularity: "Popularity",
@@ -343,8 +344,9 @@ export const translations = {
       filter_all: "Уся кава",
       filter_single_origin: "Моносорти",
       filter_espresso: "Еспресо-суміші",
-      filter_rare: "Гейша та рідкісні сорти",
+      filter_rare: "Рідкісні сорти",
       filter_decaf: "Без кофеїну",
+      filter_drip: "Дріп-кава",
 
       sort_by: "Сортувати",
       sort_popularity: "За популярністю",

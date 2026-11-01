@@ -18,7 +18,13 @@ type C7Props = {
   addToCart: (product: CartProduct) => void;
 };
 
-type CategoryFilter = "all" | "single-origin" | "espresso" | "rare" | "decaf";
+type CategoryFilter =
+  | "all"
+  | "single-origin"
+  | "espresso"
+  | "rare"
+  | "decaf"
+  | "drip";
 
 type SortOption = "" | "popularity" | "price-low" | "price-high" | "roast";
 
@@ -447,6 +453,13 @@ function C7_shop({ language, products, addToCart }: C7Props) {
             onClick={() => handleCategoryChange("decaf")}
           >
             {t.c7.filter_decaf}
+          </button>
+          <button
+            type="button"
+            className={activeCategory === "drip" ? active_filter : undefined}
+            onClick={() => handleCategoryChange("drip")}
+          >
+            {t.c7.filter_drip}
           </button>
         </div>
         <div className={c7_sort_pannel_sort}>

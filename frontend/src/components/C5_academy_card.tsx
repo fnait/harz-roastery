@@ -1,7 +1,8 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { css, cx } from "@emotion/css";
 
-import { createCourseEnrollment } from "../services/courseEnrollmentApi";
+// CV version: the enrollment is not sent to the backend (see handleSubmit).
+// import { createCourseEnrollment } from "../services/courseEnrollmentApi";
 
 import { translations } from "./translations";
 
@@ -48,6 +49,9 @@ const overlay = css({
   },
 });
 
+// The card fits the viewport: a long description scrolls inside
+// `description_scroll`. The card's own scroll is only a fallback for very
+// short viewports (e.g. a phone with the keyboard open).
 const card_place = css({
   display: "flex",
   flexDirection: "column",
@@ -55,7 +59,7 @@ const card_place = css({
 
   width: "100%",
   maxWidth: "560px",
-  maxHeight: "90vh",
+  maxHeight: "calc(100dvh - 48px)",
   boxSizing: "border-box",
 
   padding: "48px",
@@ -66,6 +70,12 @@ const card_place = css({
 
   color: "var(--text-main)",
 
+  // Short viewports (e.g. laptops): tighter spacing so the card still fits.
+  "@media (max-height: 920px)": {
+    padding: "32px 48px",
+    gap: "20px",
+  },
+
   "@media (max-width: 768px)": {
     maxWidth: "520px",
     padding: "36px",
@@ -74,7 +84,7 @@ const card_place = css({
 
   "@media (max-width: 600px)": {
     maxWidth: "100%",
-    maxHeight: "none",
+    maxHeight: "calc(100dvh - 64px)",
 
     margin: "16px 0",
     padding: "28px 24px",
@@ -84,19 +94,31 @@ const card_place = css({
   },
 
   "@media (max-width: 400px)": {
+    maxHeight: "calc(100dvh - 52px)",
+
     padding: "24px 18px",
     gap: "20px",
+
     borderRadius: "18px",
   },
 });
 
+// Sticky, so the close button stays reachable when the card itself scrolls.
+// The shadow paints the card padding above it, so scrolled text does not
+// show there.
 const cp_top = css({
+  position: "sticky",
+  top: 0,
+  zIndex: 1,
   display: "flex",
   flexDirection: "row",
   justifyContent: "space-between",
   alignItems: "flex-start",
 
   gap: "16px",
+
+  backgroundColor: "var(--bg-card)",
+  boxShadow: "0 -48px 0 48px var(--bg-card)",
 });
 
 const close_button = css({
@@ -156,9 +178,18 @@ const cp_top_p1 = css({
   },
 });
 
+// Title + description keep their natural height (`flexBasis: "content"`).
+// When the viewport is too short for the whole card, this is the only block
+// that shrinks: `height` is never the real size here, it only sets how far
+// the block may shrink (never below its content, so a short description
+// gets no empty space). The rest of the card keeps its size.
 const cp_top_p2 = css({
   display: "flex",
   flexDirection: "column",
+  flexBasis: "content",
+
+  height: "150px",
+
   gap: "16px",
 
   "& h2": {
@@ -199,6 +230,38 @@ const cp_top_p2 = css({
   },
 });
 
+const description_scroll = css({
+  overflowY: "auto",
+  overscrollBehavior: "contain",
+
+  maxHeight: "220px",
+  paddingRight: "8px",
+
+  scrollbarWidth: "thin",
+  scrollbarColor: "var(--text-muted) transparent",
+
+  "&::-webkit-scrollbar": {
+    width: "5px",
+  },
+
+  "&::-webkit-scrollbar-track": {
+    background: "transparent",
+  },
+
+  "&::-webkit-scrollbar-thumb": {
+    background: "var(--text-muted)",
+    borderRadius: "100px",
+  },
+
+  "&::-webkit-scrollbar-thumb:hover": {
+    background: "var(--clay)",
+  },
+
+  "@media (max-width: 600px)": {
+    maxHeight: "160px",
+  },
+});
+
 const cp_top_p3 = css({
   display: "flex",
   flexDirection: "row",
@@ -233,6 +296,10 @@ const cp_top_p3 = css({
     fontWeight: "800",
     fontSize: "18px",
     color: "var(--clay)",
+  },
+
+  "@media (max-height: 920px)": {
+    padding: "16px 20px",
   },
 
   "@media (max-width: 480px)": {
@@ -271,6 +338,10 @@ const form_place = css({
   display: "flex",
   flexDirection: "column",
   gap: "32px",
+
+  "@media (max-height: 920px)": {
+    gap: "24px",
+  },
 
   "@media (max-width: 600px)": {
     gap: "24px",
@@ -320,6 +391,14 @@ const cp_top_p4 = css({
 
   "& input:focus": {
     borderBottom: "1px solid var(--clay)",
+  },
+
+  "@media (max-height: 920px)": {
+    gap: "20px",
+
+    "& input": {
+      height: "40px",
+    },
   },
 
   "@media (max-width: 480px)": {
@@ -467,7 +546,8 @@ const success_button = css({
 
 function C5_academy_card({
   onClose,
-  courseId,
+  // CV version: courseId is only needed for the disabled backend request.
+  // courseId,
   title,
   description,
   duration,
@@ -509,11 +589,12 @@ function C5_academy_card({
     try {
       setIsSubmitting(true);
 
-      await createCourseEnrollment({
-        courseId,
-        language,
-        customer: { name, email, phone },
-      });
+      // CV version: show the success screen without sending the enrollment.
+      // await createCourseEnrollment({
+      //   courseId,
+      //   language,
+      //   customer: { name, email, phone },
+      // });
 
       setIsSuccess(true);
     } catch (error) {
@@ -580,7 +661,9 @@ function C5_academy_card({
         </div>
         <div className={cp_top_p2}>
           <h2 className="font-playfair">{title}</h2>
-          <p>{description}</p>
+          <div className={description_scroll}>
+            <p>{description}</p>
+          </div>
         </div>
         <div className={cp_top_p3}>
           <div>

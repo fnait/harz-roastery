@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { css, cx } from "@emotion/css";
 
-import { createCustomRoastingRequest } from "../services/customRoastingApi";
+// CV version: the request is not sent to the backend (see handleSubmit).
+// import { createCustomRoastingRequest } from "../services/customRoastingApi";
 
 import close_icon from "../assets/close_icon.svg";
 
@@ -572,20 +573,21 @@ function C6_CustomRoastingForm({ language, onClose }: Props) {
     try {
       setIsSubmitting(true);
 
-      await createCustomRoastingRequest({
-        customer: {
-          name: formData.name.trim(),
-          email: formData.email.trim(),
-          phone: formData.phone.trim(),
-        },
-        coffee: {
-          origin: formData.origin.trim(),
-          quantity: formData.quantity.trim(),
-          roast: formData.roast,
-          purpose: formData.purpose,
-        },
-        message: formData.message.trim(),
-      });
+      // CV version: show the success screen without sending the request.
+      // await createCustomRoastingRequest({
+      //   customer: {
+      //     name: formData.name.trim(),
+      //     email: formData.email.trim(),
+      //     phone: formData.phone.trim(),
+      //   },
+      //   coffee: {
+      //     origin: formData.origin.trim(),
+      //     quantity: formData.quantity.trim(),
+      //     roast: formData.roast,
+      //     purpose: formData.purpose,
+      //   },
+      //   message: formData.message.trim(),
+      // });
 
       setIsSuccess(true);
     } catch (error) {

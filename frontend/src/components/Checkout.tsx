@@ -1,7 +1,8 @@
 import { useState, type FormEvent } from "react";
 import { css, cx } from "@emotion/css";
 
-import { createOrder } from "../services/orderApi";
+// CV version: the order is not sent to the backend (see handleSubmit).
+// import { createOrder } from "../services/orderApi";
 
 import type { CartItem, OrderCustomer } from "../data/orders";
 
@@ -427,20 +428,21 @@ function Checkout({
     try {
       setIsSubmitting(true);
 
-      await createOrder({
-        customer: {
-          name: customer.name.trim(),
-          phone: customer.phone.trim(),
-          email: customer.email.trim(),
-          city: customer.city.trim(),
-          address: customer.address.trim(),
-          comment: customer.comment.trim(),
-        },
-        items: cartItems.map((item) => ({
-          productId: item.id,
-          quantity: item.quantity,
-        })),
-      });
+      // CV version: show the success screen without sending the order.
+      // await createOrder({
+      //   customer: {
+      //     name: customer.name.trim(),
+      //     phone: customer.phone.trim(),
+      //     email: customer.email.trim(),
+      //     city: customer.city.trim(),
+      //     address: customer.address.trim(),
+      //     comment: customer.comment.trim(),
+      //   },
+      //   items: cartItems.map((item) => ({
+      //     productId: item.id,
+      //     quantity: item.quantity,
+      //   })),
+      // });
 
       clearCart();
       await onOrderComplete();

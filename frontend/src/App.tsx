@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import Header from "./components/Header";
@@ -13,14 +13,17 @@ import Footer from "./components/Footer";
 import AdminPanel from "./admin/AdminPanel";
 import Reveal from "./components/Reveal";
 
-import { getCourses } from "./services/courseApi";
-import { getProducts } from "./services/productApi";
+// CV version: products and courses are not loaded from the backend, the site
+// shows the placeholder data from `data/`. To restore the sync, uncomment the
+// "CV version" blocks below and add `useEffect` back to the React import.
+// import { getCourses } from "./services/courseApi";
+// import { getProducts } from "./services/productApi";
 
 import type { CourseEnrollment } from "./data/courseEnrollments";
-import type { Course } from "./data/courses";
+import { initialCourses, type Course } from "./data/courses";
 import type { CustomRoastingRequest } from "./data/customRoasting";
 import type { CartItem, Order } from "./data/orders";
-import type { CartProduct } from "./data/products";
+import { initialProducts, type CartProduct } from "./data/products";
 
 // ----------------------------------------------------------------------
 // MAIN SITE
@@ -189,53 +192,59 @@ function App() {
   // PRODUCTS
   // ----------------------------------------------------------------------
 
-  const [products, setProducts] = useState<CartProduct[]>([]);
+  // CV version: placeholder products instead of the backend data.
+  const [products, setProducts] = useState<CartProduct[]>(initialProducts);
 
-  const refreshProducts = useCallback(async () => {
-    try {
-      const firestoreProducts = await getProducts();
+  // CV version: nothing to reload. Kept as a no-op because the header and
+  // checkout call it after an order.
+  const refreshProducts = useCallback(async () => {}, []);
 
-      setProducts(firestoreProducts);
-    } catch (error) {
-      console.error("Failed to load products from backend:", error);
-    }
-  }, []);
-
-  useEffect(() => {
-    void refreshProducts();
-  }, [refreshProducts]);
+  // const refreshProducts = useCallback(async () => {
+  //   try {
+  //     const firestoreProducts = await getProducts();
+  //
+  //     setProducts(firestoreProducts);
+  //   } catch (error) {
+  //     console.error("Failed to load products from backend:", error);
+  //   }
+  // }, []);
+  //
+  // useEffect(() => {
+  //   void refreshProducts();
+  // }, [refreshProducts]);
 
   // ----------------------------------------------------------------------
   // COURSES
   // ----------------------------------------------------------------------
 
-  const [courses, setCourses] = useState<Course[]>([]);
+  // CV version: placeholder courses instead of the backend data.
+  const [courses, setCourses] = useState<Course[]>(initialCourses);
 
-  useEffect(() => {
-    let cancelled = false;
-
-    const loadCourses = async () => {
-      try {
-        const firestoreCourses = await getCourses();
-
-        if (!cancelled) {
-          setCourses(firestoreCourses);
-        }
-      } catch (error) {
-        console.error("Failed to load courses from backend:", error);
-
-        if (!cancelled) {
-          setCourses([]);
-        }
-      }
-    };
-
-    void loadCourses();
-
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+  // useEffect(() => {
+  //   let cancelled = false;
+  //
+  //   const loadCourses = async () => {
+  //     try {
+  //       const firestoreCourses = await getCourses();
+  //
+  //       if (!cancelled) {
+  //         setCourses(firestoreCourses);
+  //       }
+  //     } catch (error) {
+  //       console.error("Failed to load courses from backend:", error);
+  //
+  //       if (!cancelled) {
+  //         setCourses([]);
+  //       }
+  //     }
+  //   };
+  //
+  //   void loadCourses();
+  //
+  //   return () => {
+  //     cancelled = true;
+  //   };
+  // }, []);
 
   // Orders, course enrollments and custom roasting requests are loaded by
   // their admin pages. The state lives here so the dashboard counters keep

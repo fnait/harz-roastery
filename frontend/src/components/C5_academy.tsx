@@ -226,6 +226,31 @@ const empty_state = css({
 });
 
 // ----------------------------------------------------------------------
+// HELPERS
+// ----------------------------------------------------------------------
+
+const DESCRIPTION_PREVIEW_LENGTH = 200;
+
+// Shortens text to `maxLength` characters without cutting a word in half and
+// adds "...". Text that already fits is returned as is.
+const truncateText = (text: string, maxLength = DESCRIPTION_PREVIEW_LENGTH) => {
+  const trimmed = text.trim();
+
+  if (trimmed.length <= maxLength) {
+    return trimmed;
+  }
+
+  // One extra character keeps a word that ends exactly at the limit.
+  const shortened = trimmed.slice(0, maxLength + 1);
+  const lastSpace = shortened.search(/\s\S*$/);
+  const preview =
+    lastSpace > 0 ? shortened.slice(0, lastSpace) : trimmed.slice(0, maxLength);
+
+  // Drop punctuation left at the cut, e.g. "beans," -> "beans...".
+  return `${preview.replace(/[\s,.;:!?—–-]+$/, "")}...`;
+};
+
+// ----------------------------------------------------------------------
 // COMPONENT
 // ----------------------------------------------------------------------
 
@@ -266,7 +291,7 @@ function C5_academy({ language, courses }: C5Props) {
               <div className={c5_card}>
                 <div className={c5_card_top}>
                   <h4>{course.title[language]}</h4>
-                  <p>{course.description[language]}</p>
+                  <p>{truncateText(course.description[language])}</p>
                 </div>
                 <div className={c5_card_bottom}>
                   <div>
