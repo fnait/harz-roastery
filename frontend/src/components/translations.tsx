@@ -74,9 +74,9 @@ export const translations = {
       c3_text:
         "Advance your technical craft, sensory analysis, and perfect the science of espresso extraction.",
 
-      c4_title: "Roasters",
+      c4_title: "New to the World of Coffee",
       c4_text:
-        "Gain hands-on experience controlling thermal dynamics and mastering roasting software profiles.",
+        "Learn more about coffee beans, roasting, and brewing methods so you can choose and prepare coffee with greater confidence.",
 
       c5_title: "Coffee enthusiasts",
       c5_text:
@@ -277,9 +277,9 @@ export const translations = {
       c3_text:
         "Розвивайте технічні навички, сенсорний аналіз і вдосконалюйте науку екстракції еспресо.",
 
-      c4_title: "Ростери",
+      c4_title: "Новачки у світі кави",
       c4_text:
-        "Отримуйте практичний досвід контролю термічної динаміки та опановуйте профілі обсмажування в спеціалізованому програмному забезпеченні.",
+        "Дізнайтеся більше про зерно, обсмажування та способи заварювання, щоб упевненіше обирати й готувати каву.",
 
       c5_title: "Поціновувачі кави",
       c5_text:
